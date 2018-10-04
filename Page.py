@@ -23,7 +23,7 @@ class Page:
 		# the dialog associated with this plot element.  this is the dialog output on each "page" of the visual novel.        
 		self.plot_dialog = plot_dialog
 
-		# this will be a list containing the set of Event object associated with this point in the plot line.
+		# this will be a list containing the  set of Event object associated with this point in the plot line.
 		self.events_list = events_list.copy() 
 
 		def get_page_number(): 
