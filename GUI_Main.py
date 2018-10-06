@@ -16,6 +16,8 @@ def check_input():
     current_input = entry_field.get()
     entry_field.delete(0, END)
 
+    print("egg")
+
     if current_input == "start":
         current_input = "start"
         return "start"
