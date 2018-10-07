@@ -28,25 +28,44 @@ def check_input():
 	current_input = entry_field.get()
 	entry_field.delete(0, END)
 
+	# intro scene, which starts out asking the player whether they want to play
+	# or just tell the corgi to go away
 	if current_input == "start":
 		scene1_intro()
 		return None
+
+	# tells the program to quit.  Can take place at any time.
 	if current_input == "quit":
 		master.destroy()
+
+	# tells the program to save wherever the user is at.
 	if current_input == "save":
-		status_text.set("Progress was saved.")
+		status_text.set("Saving not yet implemented.")
 		return None
+
+	# the choice branch for the first scene.
+	# if choice A, goes to the scene where it asks to play in the backyard.
+	# if choice B, ends the game and gives the user the option to play again 
+	# or quit the game entirely.
 	if scene_number.getNum() == 1:
 		if current_input.upper() == "A":
 			scene2()
 		if current_input.upper() == "B":
 			scene10()
 
+	# triggers the choices for the second scene, where the corgi asks the user 
+	# what they want to do.
+	# if choice A, it goes to the scene where they play in the backyard.
+	# if choice B, it goes to the stair climbing scene, which is where the minigame takes place.
 	if scene_number.getNum() == 2:
 		if current_input.upper() == "A":
 			scene3_1()
 		if current_input.upper() == "B":
 			scene3_2()
+
+	# if the input given does not match anything we don't support, we tell the user it is invalid input.
+	if current_input != "start" and current_input != "quit" and current_input != "save" and current_input.upper() != "A" and current_input.upper() != "B":
+		status_text.set("\"" + current_input + "\" is not a valid input.")
 
 def scene0_instructions():
 	global status_text
@@ -73,14 +92,27 @@ def scene1_intro():
 	panel.config(image=img2)
 	panel.image=img2
 	scene_number.changeScene(1)
+
+def scene2():
+	global status_text
+	global current_input
+	global entry_field
+	global path
+	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	path = os.getcwd()+"/2_button.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	scene_number.changeScene(2)
 	
 def scene10():
 	global status_text
 	global current_input
 	global entry_field
 	global path
-	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
-	path = os.getcwd()+"/10.png"
+	status_text.set("Thanks for playing!  Type \"start\" to play again, or \"quit\" to quit the game.")
+	path = os.getcwd()+"/end.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -112,6 +144,7 @@ def scene3_2():
 	panel.config(image=img2)
 	panel.image=img2
 	scene_number.changeScene(3.2)
+
 	
 
 
