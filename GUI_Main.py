@@ -50,14 +50,6 @@ def scene1_intro():
 	panel.config(image=img2)
 	panel.image=img2
 
-	entry_field.bind('<Return>', lambda event: check_input(entry_field.get()))
-	
-	
-	if current_input == "A":
-		status_text.set("we are now in scene 2")
-		scene2_wheretoplayfirst()
-	elif current_input == "B":
-		status_text.set("This is the ending scene.  Type \"quit\" to exit the game!")
 
 
 # def scene2_wheretoplayfirst():
