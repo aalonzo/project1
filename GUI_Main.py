@@ -76,14 +76,14 @@ def check_input():
 	# if choice B, it goes to the stair climbing scene, which is where the minigame takes place.
 	elif scene_number.getNum() == 2:
 		if current_input.upper() == "A":
-			scene3_1()
+			scene3_1_takeabath()
 		if current_input.upper() == "B":
-			scene3_2()
+			scene3_2_backyardorbath()
 	elif scene_number.getNum() == 3.1:
 		if current_input.upper() == "A":
-			scene10()
+			scene5_1_kitchenformeal()
 		if current_input.upper() == "B":
-			scene10()
+			scene6_1_takeanap()
 	elif scene_number.getNum() == 3.2:
 		if current_input.upper() == "A":
 			scene4_1_playinbackyard()
@@ -93,12 +93,24 @@ def check_input():
 		if current_input.upper() == "A":
 			scene5_1_kitchenformeal()
 		if current_input.upper() == "B":
-			scene5_2_napthenmeal()
+			scene6_1_takeanap()
+	elif scene_number.getNum() == 4.2:
+		if current_input.upper() == "A":
+			scene4_3_anagramgame_firstframe()
+		if current_input.upper() == "B":
+			scene11_game_over()
 	elif scene_number.getNum() == 5.1:
 		if current_input.upper() == "A":
-			scene10()
+			scene6_1_takeanap()
 		if current_input.upper() == "B":
-			scene10()
+			scene3_1_takeabath()
+	elif scene_number.getNum() == 6.1:
+		if current_input.upper() == "A":
+			scene6_2_feedafternap()
+		if current_input.upper() == "B":
+			scene11_game_over()
+
+		
 	# elif scene_number.getNum() == 11.1:
 	# 	if current_input.upper() == "A":
 	# elif scene_number.getNum() == climbing stairs:
@@ -107,7 +119,7 @@ def check_input():
 	#	else:
 	#		status_text.set("Your response was incorrect.")	
 	# if the input given does not match anything we don't support, we tell the user it is invalid input.
-	if current_input != "start" and current_input != "quit" and current_input != "save" and current_input.upper() != "A" and current_input.upper() != "B":
+	if current_input != "start" and current_input != "quit" and current_input != "save" and current_input.upper() != "load" and current_input.upper() != "A" and current_input.upper() != "B":
 		status_text.set("\"" + current_input + "\" is not a valid input.")
 
 def scene0_instructions():
@@ -163,20 +175,41 @@ def scene10():
 	panel.image=img2
 	scene_number.changeScene(10)
 	
-def scene3_1():
+def scene3_1_takeabath():
 	global status_text
 	global current_input
 	global entry_field
 	global path
-	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
-	path = os.getcwd()+"/3_1.png"
+
+	interval = 3000 
+	status_text.set('')
+	status_text.set("You and Max go to the bathroom for a bath!")
+	entry_field.config(state=DISABLED, disabledbackground="gray")
+	path = os.getcwd()+"/corgi_outside_bath.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
+	panel.after(interval, panel.update_idletasks())
+
+	path = os.getcwd()+"/corgi_inside_bath.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	panel.after(interval, panel.update_idletasks())
+
+	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
+	path = os.getcwd()+"/corgi_button_bath.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+
 	scene_number.changeScene(3.1)
 	
-def scene3_2():
+def scene3_2_backyardorbath():
 	global status_text
 	global current_input
 	global entry_field
@@ -239,7 +272,17 @@ def scene4_1_playinbackyard():
 	scene_number.changeScene(4.1)
 
 def scene4_2_exercisethatbooty():
-	scene_number.changeScene()
+	global status_text
+	global current_input
+	global entry_field
+	global path
+	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	path = os.getcwd()+"/corgi_motivation_screwoff.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	scene_number.changeScene(4.2)
 
 def scene5_1_kitchenformeal():
 	global status_text
@@ -275,21 +318,104 @@ def scene5_1_kitchenformeal():
 
 	scene_number.changeScene(5.1)
 
-def scene11_1_motivationorscrewoff():
+def scene6_1_takeanap():
+	global status_text
+	global current_input
+	global entry_field
+	global path
+
+	interval = 2000 
+	 
+	status_text.set("You carried Max upstairs to your bedroom.")
+	entry_field.config(state=DISABLED, disabledbackground="gray")
+	path = os.getcwd()+"/corgi_off_bed.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	panel.after(interval, panel.update_idletasks())
+	
+	status_text.set("Max goes to sleep.")
+	path = os.getcwd()+"/corgi_sleeping_bed.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	panel.after(interval, panel.update_idletasks())
+
+	path = os.getcwd()+"/corgi_love_bed.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	panel.after(interval, panel.update_idletasks())
+
+	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
+	path = os.getcwd()+"/corgi_question_bed.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	# panel.update_idletasks()
+
+	 # after 1000ms
+	scene_number.changeScene(6.1)
+
+def scene6_2_feedafternap():
+	global status_text
+	global current_input
+	global entry_field
+	global path
+
+	interval = 4000 
+	status_text.set("You fed Max.")
+	entry_field.config(state=DISABLED, disabledbackground="gray")
+	path = os.getcwd()+"/corgi_getsfood_bed.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	panel.after(interval, panel.update_idletasks())
+
+	scene_number.changeScene(6.2)
+	entry_field.config(state=NORMAL, background="white")
+	scene10()
+
+
+
+# def scene4_motivationorscrewoff():
+# 	global status_text
+# 	global current_input
+# 	global entry_field
+# 	global path
+
+# 	entry_field.config(state=NORMAL, bg="white")
+# 	status_text.set("Type \"start\" to begin or \"quit\" to exit.")
+# 	path = os.getcwd()+"/corgi_motivation_screwoff.png"
+# 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+# 	img2 = ImageTk.PhotoImage(Image.open(path))
+# 	panel.config(image=img2)
+# 	panel.image=img2
+
+# 	scene_number.changeScene(11.1)
+
+def scene11_game_over():
 	global status_text
 	global current_input
 	global entry_field
 	global path
 
 	entry_field.config(state=NORMAL, bg="white")
-	status_text.set("Type \"start\" to begin or \"quit\" to exit.")
-	path = os.getcwd()+"/corgi_motivation_screwoff.png"
+	status_text.set("Game Over!  Type \"start\" to start over or \"quit\" to exit.")
+	path = os.getcwd()+"/sad.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 
 	scene_number.changeScene(11.1)
+
 
 
 def scene11_1_anagramgame_firstframe():
