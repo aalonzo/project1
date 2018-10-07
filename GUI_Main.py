@@ -1,5 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
+import os.path
 
 WINDOW_TITLE = "Corgi Simulator"
 WINDOW_WIDTH = "820"
@@ -19,8 +20,8 @@ def check_input():
     print("egg")
 
     if current_input == "start":
-        current_input = "start"
-        return "start"
+        scene1_intro()
+        return None
     if current_input == "quit":
         master.destroy()
     if current_input == "save":
@@ -38,25 +39,25 @@ def check_input():
             return "B"
 
 def scene1_intro():
-    global status_text
-    global current_input
-    global entry_field
-    global path
-    status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
-    path = "1.png"
-    #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-    img = ImageTk.PhotoImage(Image.open(path))
+	global status_text
+	global current_input
+	global entry_field
+	global path
+	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	path = os.getcwd()+"/1.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
 
-    #The Label widget is a standard Tkinter widget used to display a text or image on the screen.
-    panel = Label(master, image = img)
-
-    entry_field.bind('<Return>', lambda event: check_input(entry_field.get()))
-
-    if current_input == "A":
-        status_text.set("we are now in scene 2")
-        scene2_wheretoplayfirst()
-    elif current_input == "B":
-        status_text.set("This is the ending scene.  Type \"quit\" to exit the game!")
+	entry_field.bind('<Return>', lambda event: check_input(entry_field.get()))
+	
+	
+	if current_input == "A":
+		status_text.set("we are now in scene 2")
+		scene2_wheretoplayfirst()
+	elif current_input == "B":
+		status_text.set("This is the ending scene.  Type \"quit\" to exit the game!")
 
 
 # def scene2_wheretoplayfirst():
@@ -81,7 +82,7 @@ master.title(WINDOW_TITLE)
 master.geometry(WINDOW_HEIGHT+"x"+WINDOW_WIDTH)
 master.configure(background=WINDOW_COLOR)
 
-path = "placeholder.jpg"
+path = os.getcwd()+"\home.png"
 status_text = StringVar()
 
 #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
@@ -103,10 +104,12 @@ entry_field.pack(side="bottom", anchor='s')
 
 entry_field.bind('<Return>', lambda event: check_input())
 
+
+
 if current_input == "start":
     scene1_intro()
 
-
+print("yeehaw")
 
 
 
