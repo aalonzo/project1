@@ -2,6 +2,8 @@ from tkinter import *
 from PIL import ImageTk, Image
 import os.path
 
+
+
 WINDOW_TITLE = "Corgi Simulator"
 WINDOW_WIDTH = "820"
 WINDOW_HEIGHT = "1124"
@@ -9,34 +11,44 @@ WINDOW_COLOR = '#BEBEBE'
 
 current_input = ""
 
+class scene_num():
+	
+	def __init__(self):
+		self.num = 0
+	
+	def changeScene(self, x):
+		self.num = x
+
+	def getNum(self):
+		return self.num
+		
 def check_input():
-    global status_text
-    global current_input
-    global entry_field
+	global status_text
+	global current_input
+	global entry_field
 
-    current_input = entry_field.get()
-    entry_field.delete(0, END)
+	current_input = entry_field.get()
+	entry_field.delete(0, END)
 
-    print("egg")
+	if current_input == "start":
+		scene1_intro()
+		return None
+	if current_input == "quit":
+		master.destroy()
+	if current_input == "save":
+		status_text.set("Progress was saved.")
+		return None
+	if scene_number.getNum() == 1:
+		if current_input == "A":
+			scene2()
+		if current_input == "B":
+			scene10()
 
-    if current_input == "start":
-        scene1_intro()
-        return None
-    if current_input == "quit":
-        master.destroy()
-    if current_input == "save":
-        status_text.set("Progress was saved.")
-        return None
-    if ( current_input != "A") and (current_input != "B"):
-        status_text.set("\"" + current_input + "\" is not a valid choice.")
-        return None
-        if current_input.upper() == "A":
-            current_input = "A"
-            return "A"
-        if current_input.upper() == "B":
-            current_input = "B"
-            # status_text.set("We will branch off into choice B.")
-            return "B"
+	if scene_number.getNum() == 2:
+		if current_input == "A":
+			scene3_1()
+		if current_input == "B":
+			scene3_2()
 
 def scene1_intro():
 	global status_text
@@ -49,6 +61,47 @@ def scene1_intro():
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
+	scene_number.changeScene(1)
+	
+def scene10():
+	global status_text
+	global current_input
+	global entry_field
+	global path
+	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	path = os.getcwd()+"/10.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	scene_number.changeScene(10)
+	
+def scene3_1():
+	global status_text
+	global current_input
+	global entry_field
+	global path
+	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	path = os.getcwd()+"/3_1.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	scene_number.changeScene(3.1)
+	
+def scene3_2():
+	global status_text
+	global current_input
+	global entry_field
+	global path
+	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	path = os.getcwd()+"/3_2.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	scene_number.changeScene(3.2)
+	
 
 
 
@@ -65,6 +118,8 @@ def scene1_intro():
 #       # entry_field.bind('<Return>', lambda event: scene2_wheretoplayfirst(panel, check_input(entry_field.get())))
 
 
+
+scene_number = scene_num()
 
 
 # #This creates the main window of an application
@@ -97,11 +152,6 @@ entry_field.pack(side="bottom", anchor='s')
 entry_field.bind('<Return>', lambda event: check_input())
 
 
-
-if current_input == "start":
-    scene1_intro()
-
-print("yeehaw")
 
 
 
