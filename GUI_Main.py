@@ -1,7 +1,6 @@
 from tkinter import *
 from PIL import ImageTk, Image
 import os.path
-import time
 
 WINDOW_TITLE = "Corgi Adventure"
 WINDOW_WIDTH = "820"
@@ -76,10 +75,14 @@ def check_input():
 			scene_exercisethatbooty()
 	elif scene_number.getNum() == 4.1:
 		if current_input.upper() == "A":
+			scene5_1_kitchenformeal()
+		if current_input.upper() == "B":
+			scene5_2_napthenmeal()
+	elif scene_number.getNum() == 5.1:
+		if current_input.upper() == "A":
 			scene10()
 		if current_input.upper() == "B":
 			scene10()
-
 
 
 	# if the input given does not match anything we don't support, we tell the user it is invalid input.
@@ -171,6 +174,7 @@ def scene4_1_playinbackyard():
 	global path
 
 	interval = 2000 
+	status_text.set('')
 	status_text.set("You and Max are having fun in the backyard!")
 	entry_field.config(state=DISABLED, disabledbackground="gray")
 	path = os.getcwd()+"/corgi_backyard_left.png"
@@ -178,6 +182,8 @@ def scene4_1_playinbackyard():
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
+	panel.update_idletasks()
+
 
 	
 	path = os.getcwd()+"/corgi_backyard_right.png"
@@ -198,7 +204,7 @@ def scene4_1_playinbackyard():
 	# #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	# img2 = ImageTk.PhotoImage(Image.open(path))
 	# panel.config(image=img2) 
-	# panel.image=img2
+	# panel.image=img2	
 
 	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
@@ -209,10 +215,47 @@ def scene4_1_playinbackyard():
 	panel.image=img2
 	# panel.update_idletasks()
 
-	
-
 	 # after 1000ms
 	scene_number.changeScene(4.1)
+
+def scene5_1_kitchenformeal():
+	interval = 2000 
+	status_text.set('')
+	status_text.set("You and Max go to the kitchen to eat some food.")
+	entry_field.config(state=DISABLED, disabledbackground="gray")
+	path = os.getcwd()+"/corgi_waiting_food.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img3 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img3)
+	panel.image=img3
+	panel.update_idletasks()
+
+
+	
+	path = os.getcwd()+"/corgi_gets_food.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img3 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img3)
+	panel.image=img3
+	panel.after(interval, panel.update_idletasks())
+
+	# path = os.getcwd()+"/corgi_backyard_right.png"
+	# #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	# img2 = ImageTk.PhotoImage(Image.open(path))
+	# panel.config(image=img2) 
+	# panel.image=img2	
+
+	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
+	path = os.getcwd()+"/corgi_kitchen_question.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img3 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img3)
+	panel.image=img3
+	panel.after(interval, panel.update_idletasks())
+
+	scene_number.changeScene(5.1)
+
 
 
 	
