@@ -2,9 +2,7 @@ from tkinter import *
 from PIL import ImageTk, Image
 import os.path
 
-
-
-WINDOW_TITLE = "Corgi Simulator"
+WINDOW_TITLE = "Corgi Adventure"
 WINDOW_WIDTH = "820"
 WINDOW_HEIGHT = "1124"
 WINDOW_COLOR = '#BEBEBE'
@@ -39,16 +37,29 @@ def check_input():
 		status_text.set("Progress was saved.")
 		return None
 	if scene_number.getNum() == 1:
-		if current_input == "A":
+		if current_input.upper() == "A":
 			scene2()
-		if current_input == "B":
+		if current_input.upper() == "B":
 			scene10()
 
 	if scene_number.getNum() == 2:
-		if current_input == "A":
+		if current_input.upper() == "A":
 			scene3_1()
-		if current_input == "B":
+		if current_input.upper() == "B":
 			scene3_2()
+
+def scene0_instructions():
+	global status_text
+	global current_input
+	global entry_field
+	global path
+	entry_field.config(state=NORMAL, bg="white")
+	status_text.set("Type \"start\" to begin or \"quit\" to exit.")
+	path = os.getcwd()+"/inst.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
 
 def scene1_intro():
 	global status_text
@@ -56,7 +67,7 @@ def scene1_intro():
 	global entry_field
 	global path
 	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
-	path = os.getcwd()+"/1.png"
+	path = os.getcwd()+"/1_button.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -129,7 +140,7 @@ master.title(WINDOW_TITLE)
 master.geometry(WINDOW_HEIGHT+"x"+WINDOW_WIDTH)
 master.configure(background=WINDOW_COLOR)
 
-path = os.getcwd()+"\home.png"
+path = os.getcwd()+"/home.png"
 status_text = StringVar()
 
 #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
@@ -143,17 +154,15 @@ panel.pack(side = "top", fill = "both", expand="yes")
 
 status = Label(master, textvariable=status_text, background=WINDOW_COLOR)
 status.pack(side="bottom", anchor="sw")
-status_text.set("Welcome to " + WINDOW_TITLE + "!  Type \"start\" to begin or \"quit\" to exit.")
+status_text.set("Welcome to " + WINDOW_TITLE + "! Starting up..." )
 
-entry_field = Entry(master, textvariable=current_input)
+entry_field = Entry(master, textvariable=current_input, disabledbackground="gray", state=DISABLED)
 entry_field.configure(bd=3,width=WINDOW_WIDTH)
 entry_field.pack(side="bottom", anchor='s')
 
+panel.after(5000, lambda: scene0_instructions() ) # after 1000ms
+
 entry_field.bind('<Return>', lambda event: check_input())
-
-
-
-
 
 master.mainloop()
 # #Start the GUI
