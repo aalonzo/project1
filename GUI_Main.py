@@ -13,6 +13,7 @@ current_input = ""
 
 theriddle = Riddle(0)
 
+
 class scene_num():
 	
 	def __init__(self):
@@ -28,9 +29,9 @@ def check_input():
 	global status_text
 	global current_input
 	global entry_field
+	global theriddle
 
 	# print(theriddle.getSolution("gamer"))
-
 	current_input = entry_field.get()
 	entry_field.delete(0, END)
 
@@ -69,7 +70,7 @@ def check_input():
 		if current_input.upper() == "A":
 			scene2()
 		if current_input.upper() == "B":
-			scene10()
+			scene11_game_over()
 	# triggers the choices for the second scene, where the corgi asks the user 
 	# what they want to do.
 	# if choice A, it goes to the scene where they play in the backyard.
@@ -96,7 +97,8 @@ def check_input():
 			scene6_1_takeanap()
 	elif scene_number.getNum() == 4.2:
 		if current_input.upper() == "A":
-			scene4_3_anagramgame_firstframe()
+			# if not enough time, fall back to skipping straight to nap.
+			scene12_anagramgame_instructions()
 		if current_input.upper() == "B":
 			scene11_game_over()
 	elif scene_number.getNum() == 5.1:
@@ -108,18 +110,37 @@ def check_input():
 		if current_input.upper() == "A":
 			scene6_2_feedafternap()
 		if current_input.upper() == "B":
-			scene11_game_over()
+			scene11_game_over()	
+	elif scene_number.getNum() == 12:
+		if current_input == "begin":
+			scene12_1_anagramgame_firstanagram()
+		else:
+			status_text.set("\""+ current_input + "\" doesn't begin the game.")
 
+	elif scene_number.getNum() == 12.1:
+		if theriddle.getSolution(current_input):
+			scene12_2_anagramgame_secondanagram()
+		else:
+			status_text.set("Oh no! That guess was wrong!")
+	elif scene_number.getNum() == 12.2:
+		if theriddle.getSolution(current_input):
+			scene12_3_anagramgame_thirdanagram()
+		else:
+			status_text.set("Oh no! That guess was wrong!")
+	elif scene_number.getNum() == 12.3:
+		if theriddle.getSolution(current_input):
+			scene12_4_anagramgame_success()
+		else:
+			status_text.set("Oh no! That guess was wrong!")
+	elif scene_number.getNum() == 12.4:
+			scene6_1_takeanap()
 		
-	# elif scene_number.getNum() == 11.1:
-	# 	if current_input.upper() == "A":
-	# elif scene_number.getNum() == climbing stairs:
-	#	if riddle.getSolution(current_input):
-	#		go to next stair frame
-	#	else:
-	#		status_text.set("Your response was incorrect.")	
+
+
+
+
 	# if the input given does not match anything we don't support, we tell the user it is invalid input.
-	if current_input != "start" and current_input != "quit" and current_input != "save" and current_input.upper() != "load" and current_input.upper() != "A" and current_input.upper() != "B":
+	if (scene_number.getNum() <= 12 and scene_number.getNum() >= 12.3) and current_input != "start" and current_input != "quit" and current_input != "save" and current_input.upper() != "load" and current_input.upper() != "A" and current_input.upper() != "B":
 		status_text.set("\"" + current_input + "\" is not a valid input.")
 
 def scene0_instructions():
@@ -184,6 +205,7 @@ def scene3_1_takeabath():
 	interval = 3000 
 	status_text.set('')
 	status_text.set("You and Max go to the bathroom for a bath!")
+	status.pack()
 	entry_field.config(state=DISABLED, disabledbackground="gray")
 	path = os.getcwd()+"/corgi_outside_bath.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
@@ -229,7 +251,6 @@ def scene4_1_playinbackyard():
 	global path
 
 	interval = 2000 
-	status_text.set('')
 	status_text.set("You and Max are having fun in the backyard!")
 	entry_field.config(state=DISABLED, disabledbackground="gray")
 	path = os.getcwd()+"/corgi_backyard_left.png"
@@ -416,41 +437,106 @@ def scene11_game_over():
 
 	scene_number.changeScene(11.1)
 
-
-
-def scene11_1_anagramgame_firstframe():
+def scene12_anagramgame_instructions():
 	global status_text
 	global current_input
 	global entry_field
 	global path
 
 	entry_field.config(state=NORMAL, bg="white")
-	status_text.set("Type \"start\" to begin or \"quit\" to exit.")
-	path = os.getcwd()+"/inst.png"
+	status_text.set("Type \"begin\" to start the mini game.")
+	path = os.getcwd()+"/corgi_instructions_game.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+
+	scene_number.changeScene(12)
+
+def scene12_1_anagramgame_firstanagram():
+	global status_text
+	global current_input
+	global entry_field
+	global path
+	global theriddle
+
+	entry_field.config(state=NORMAL, bg="white")
+	status_text.set("Solve this anagram: " + theriddle.getRiddle())
+	path = os.getcwd()+"/corgi_firstframe_game.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+
+	scene_number.changeScene(12.1)
+
+def scene12_2_anagramgame_secondanagram():
+	global status_text
+	global current_input
+	global entry_field
+	global path
+	global theriddle
+
+	theriddle = Riddle(1)
+	entry_field.config(state=NORMAL, bg="white")
+	status_text.set("Solve this anagram: " + theriddle.getRiddle())
+	path = os.getcwd()+"/corgi_secondframe_game.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+
+	scene_number.changeScene(12.2)
+
+def scene12_3_anagramgame_thirdanagram():
+	global status_text
+	global current_input
+	global entry_field
+	global path
+	global theriddle
+
+	theriddle = Riddle(2)
+	entry_field.config(state=NORMAL, bg="white")
+	status_text.set("Solve this anagram: " + theriddle.getRiddle())
+	path = os.getcwd()+"/corgi_thirdframe_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 
 
+	scene_number.changeScene(12.3)
 
+def scene12_4_anagramgame_success():
+	global status_text
+	global current_input
+	global entry_field
+	global path
 
-	
+	panel.after(1000, panel.update_idletasks())
 
+	interval = 3000 
+	status_text.set('')
+	status_text.set("*bork bork bork* (Thank you for encouraging me!)")
+	entry_field.config(state=DISABLED, disabledbackground="gray")
+	path = os.getcwd()+"/corgi_win_game.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	panel.after(interval, panel.update_idletasks())
 
+	status_text.set("")
+	path = os.getcwd()+"/corgi_success_game.png"
+	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
+	img2 = ImageTk.PhotoImage(Image.open(path))
+	panel.config(image=img2)
+	panel.image=img2
+	panel.after(4000, panel.update_idletasks())
 
-# def scene2_wheretoplayfirst():
-#       global path
-#       path = "2_2.png"
-#       #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-#       img = ImageTk.PhotoImage(Image.open(path))
-
-#       #The Label widget is a standard Tkinter widget used to display a text or image on the screen.
-#       panel = Label(master, image = img)
-
-#       choice = entry_field.get()
-#       # entry_field.bind('<Return>', lambda event: scene2_wheretoplayfirst(panel, check_input(entry_field.get())))
-
+	scene_number.changeScene(12.4)
+	entry_field.config(state=NORMAL, disabledbackground="white")
+	scene6_1_takeanap()
 
 
 scene_number = scene_num()
