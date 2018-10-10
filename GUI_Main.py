@@ -4,7 +4,7 @@ import os.path
 import io
 from Riddles import Riddle
 
-WINDOW_TITLE = "Corgi Adventure"
+WINDOW_TITLE = "Corgi Adventures"
 WINDOW_WIDTH = "820"
 WINDOW_HEIGHT = "1124"
 WINDOW_COLOR = '#BEBEBE'
@@ -537,7 +537,6 @@ def scene12_4_anagramgame_success():
 	scene_number.changeScene(12.4)
 	entry_field.config(state=NORMAL, disabledbackground="white")
 	scene6_1_takeanap()
-
 
 scene_number = scene_num()
 
