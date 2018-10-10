@@ -134,13 +134,8 @@ def check_input():
 			status_text.set("Oh no! That guess was wrong!")
 	elif scene_number.getNum() == 12.4:
 			scene6_1_takeanap()
-		
-
-
-
-
 	# if the input given does not match anything we don't support, we tell the user it is invalid input.
-	if (scene_number.getNum() <= 12 and scene_number.getNum() >= 12.3) and current_input != "start" and current_input != "quit" and current_input != "save" and current_input.upper() != "load" and current_input.upper() != "A" and current_input.upper() != "B":
+	if current_input != "start" and current_input != "quit" and current_input != "save" and current_input.upper() != "load" and current_input.upper() != "A" and current_input.upper() != "B" and (scene_number.getNum() < 12 or scene_number.getNum() > 12.4):
 		status_text.set("\"" + current_input + "\" is not a valid input.")
 
 def scene0_instructions():
