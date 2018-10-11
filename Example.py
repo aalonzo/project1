@@ -1,3 +1,9 @@
+''' author: Adrian Alonzo
+	filename: Example.py
+	purpose: to demonstrate how to superimpose a text field and buttons
+			 on top of a scene, as well as hide/show the text field.
+'''
+
 from tkinter import *
 from PIL import ImageTk,Image
 import os.path
