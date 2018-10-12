@@ -4,10 +4,12 @@ import os.path
 import io
 from Riddles import Riddle
 
+BUTTON_SPACING = 50
+INSTALL_DIR = os.getcwd() + "/"
 WINDOW_TITLE = "Corgi Adventures"
+WINDOW_COLOR = '#BEBEBE'
 WINDOW_WIDTH = "820"
 WINDOW_HEIGHT = "1124"
-WINDOW_COLOR = '#BEBEBE'
 
 current_input = ""
 
@@ -24,9 +26,27 @@ class scene_num():
 
 	def getNum(self):
 		return self.num
+
+# this function updates the status bar to whatever we want.
+# to make it read only, we have to set the state to normal so the text can be edited.
+# according to the documentation, you delete text by specifying the arguments below.
+# once written, you set the state to disabled, giving you a read-only dialog box!
+def update_status_bar(sb_text):
+	global status 
+
+	status.config(text="")
+	status.update_idletasks()
+	status.config(text=sb_text)
+	status.update_idletasks()
+
+def update_sceneimg(img_filepath):
+	# the standard image opening code used in the last release.
+	img = ImageTk.PhotoImage(Image.open(img_filepath))
+	bg_image_widget.config(image=img)
+	bg_image_widget.image=img
 		
 def check_input():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
 	global theriddle
@@ -50,7 +70,7 @@ def check_input():
 		save_file = open(os.getcwd()+"/save.txt", "w+")
 		save_file.write(str(scene_number.getNum()))
 		save_file.close()
-		status_text.set("Your progress was saved.")
+		update_status_bar("Your progress was saved.")
 		return None
 
 	# tells the program to save wherever the user is at.
@@ -115,50 +135,50 @@ def check_input():
 		if current_input == "begin":
 			scene12_1_anagramgame_firstanagram()
 		else:
-			status_text.set("\""+ current_input + "\" doesn't begin the game.")
+			update_status_bar("\""+ current_input + "\" doesn't begin the game.")
 
 	elif scene_number.getNum() == 12.1:
 		if theriddle.getSolution(current_input):
 			scene12_2_anagramgame_secondanagram()
 		else:
-			status_text.set("Oh no! That guess was wrong!")
+			update_status_bar("Oh no! That guess was wrong!")
 	elif scene_number.getNum() == 12.2:
 		if theriddle.getSolution(current_input):
 			scene12_3_anagramgame_thirdanagram()
 		else:
-			status_text.set("Oh no! That guess was wrong!")
+			update_status_bar("Oh no! That guess was wrong!")
 	elif scene_number.getNum() == 12.3:
 		if theriddle.getSolution(current_input):
 			scene12_4_anagramgame_success()
 		else:
-			status_text.set("Oh no! That guess was wrong!")
+			update_status_bar("Oh no! That guess was wrong!")
 	elif scene_number.getNum() == 12.4:
 			scene6_1_takeanap()
 	# if the input given does not match anything we don't support, we tell the user it is invalid input.
 	if current_input != "start" and current_input != "quit" and current_input != "save" and current_input.upper() != "load" and current_input.upper() != "A" and current_input.upper() != "B" and (scene_number.getNum() < 12 or scene_number.getNum() > 12.4):
-		status_text.set("\"" + current_input + "\" is not a valid input.")
+		update_status_bar("\"" + current_input + "\" is not a valid input.")
 
 def scene0_instructions():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
+	# global path
 
 	entry_field.config(state=NORMAL, bg="white")
-	status_text.set("Type \"start\" to begin or \"quit\" to exit.")
-	path = os.getcwd()+"/inst.png"
+	update_status_bar("Type \"start\" to begin or \"quit\" to exit.")
+	path = INSTALL_DIR +"inst.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 
 def scene1_intro():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
-	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
-	path = os.getcwd()+"/1_button.png"
+	# global path
+	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	path = INSTALL_DIR +"1_button.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -166,12 +186,12 @@ def scene1_intro():
 	scene_number.changeScene(1)
 
 def scene2():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
-	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
-	path = os.getcwd()+"/2_button.png"
+	# global path
+	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	path = INSTALL_DIR +"2_button.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -179,12 +199,12 @@ def scene2():
 	scene_number.changeScene(2)
 	
 def scene10():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
-	status_text.set("Thanks for playing!  Type \"start\" to play again, or \"quit\" to quit the game.")
-	path = os.getcwd()+"/end.png"
+	# global path
+	update_status_bar("Thanks for playing!  Type \"start\" to play again, or \"quit\" to quit the game.")
+	path = INSTALL_DIR +"end.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -192,33 +212,33 @@ def scene10():
 	scene_number.changeScene(10)
 	
 def scene3_1_takeabath():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
+	# global path
 
 	interval = 3000 
-	status_text.set('')
-	status_text.set("You and Max go to the bathroom for a bath!")
+	update_status_bar('')
+	update_status_bar("You and Max go to the bathroom for a bath!")
 	status.pack()
 	entry_field.config(state=DISABLED, disabledbackground="gray")
-	path = os.getcwd()+"/corgi_outside_bath.png"
+	path = INSTALL_DIR +"corgi_outside_bath.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 
-	path = os.getcwd()+"/corgi_inside_bath.png"
+	path = INSTALL_DIR +"corgi_inside_bath.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 
-	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
-	path = os.getcwd()+"/corgi_button_bath.png"
+	path = INSTALL_DIR +"corgi_button_bath.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -227,12 +247,12 @@ def scene3_1_takeabath():
 	scene_number.changeScene(3.1)
 	
 def scene3_2_backyardorbath():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
-	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
-	path = os.getcwd()+"/corgi_ask_backyard.png"
+	# global path
+	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	path = INSTALL_DIR +"corgi_ask_backyard.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -240,44 +260,44 @@ def scene3_2_backyardorbath():
 	scene_number.changeScene(3.2)
 
 def scene4_1_playinbackyard():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
+	# global path
 
 	interval = 2000 
-	status_text.set("You and Max are having fun in the backyard!")
+	update_status_bar("You and Max are having fun in the backyard!")
 	entry_field.config(state=DISABLED, disabledbackground="gray")
-	path = os.getcwd()+"/corgi_backyard_left.png"
+	path = INSTALL_DIR +"corgi_backyard_left.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 	
-	path = os.getcwd()+"/corgi_backyard_right.png"
+	path = INSTALL_DIR +"corgi_backyard_right.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 
-	path = os.getcwd()+"/corgi_backyard_left.png"
+	path = INSTALL_DIR +"corgi_backyard_left.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 
-	# path = os.getcwd()+"/corgi_backyard_right.png"
+	# path = INSTALL_DIR +"corgi_backyard_right.png"
 	# #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	# img2 = ImageTk.PhotoImage(Image.open(path))
 	# panel.config(image=img2) 
 	# panel.image=img2	
 
-	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
-	path = os.getcwd()+"/corgi_backyard_button.png"
+	path = INSTALL_DIR +"corgi_backyard_button.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -288,12 +308,12 @@ def scene4_1_playinbackyard():
 	scene_number.changeScene(4.1)
 
 def scene4_2_exercisethatbooty():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
-	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
-	path = os.getcwd()+"/corgi_motivation_screwoff.png"
+	# global path
+	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	path = INSTALL_DIR +"corgi_motivation_screwoff.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -301,32 +321,32 @@ def scene4_2_exercisethatbooty():
 	scene_number.changeScene(4.2)
 
 def scene5_1_kitchenformeal():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
+	# global path
 
 	interval = 3000 
-	status_text.set('')
-	status_text.set("You and Max go to the kitchen to eat food.")
+	update_status_bar('')
+	update_status_bar("You and Max go to the kitchen to eat food.")
 	entry_field.config(state=DISABLED, disabledbackground="gray")
-	path = os.getcwd()+"/corgi_waiting_food.png"
+	path = INSTALL_DIR +"corgi_waiting_food.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 
-	path = os.getcwd()+"/corgi_gets_food.png"
+	path = INSTALL_DIR +"corgi_gets_food.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 
-	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
-	path = os.getcwd()+"/corgi_kitchen_question.png"
+	path = INSTALL_DIR +"corgi_kitchen_question.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -335,40 +355,42 @@ def scene5_1_kitchenformeal():
 	scene_number.changeScene(5.1)
 
 def scene6_1_takeanap():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
+	# global path
 
 	interval = 2000 
 	 
-	status_text.set("You carried Max upstairs to your bedroom.")
+	update_status_bar("You carried Max upstairs to your bedroom.")
 	entry_field.config(state=DISABLED, disabledbackground="gray")
-	path = os.getcwd()+"/corgi_off_bed.png"
+	path = INSTALL_DIR +"corgi_off_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 	
-	status_text.set("Max goes to sleep.")
-	path = os.getcwd()+"/corgi_sleeping_bed.png"
+	update_status_bar("Max goes to sleep.")
+	path = INSTALL_DIR +"corgi_sleeping_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 
-	path = os.getcwd()+"/corgi_love_bed.png"
+	update_status_bar("")
+	path = INSTALL_DIR +"corgi_love_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 
-	status_text.set("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+
+	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
-	path = os.getcwd()+"/corgi_question_bed.png"
+	path = INSTALL_DIR +"corgi_question_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -379,15 +401,15 @@ def scene6_1_takeanap():
 	scene_number.changeScene(6.1)
 
 def scene6_2_feedafternap():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
+	# global path
 
 	interval = 4000 
-	status_text.set("You fed Max.")
+	update_status_bar("You fed Max.")
 	entry_field.config(state=DISABLED, disabledbackground="gray")
-	path = os.getcwd()+"/corgi_getsfood_bed.png"
+	path = INSTALL_DIR +"corgi_getsfood_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -401,14 +423,14 @@ def scene6_2_feedafternap():
 
 
 # def scene4_motivationorscrewoff():
-# 	global status_text
+# 	# global status_text
 # 	global current_input
 # 	global entry_field
-# 	global path
+# 	# global path
 
 # 	entry_field.config(state=NORMAL, bg="white")
-# 	status_text.set("Type \"start\" to begin or \"quit\" to exit.")
-# 	path = os.getcwd()+"/corgi_motivation_screwoff.png"
+# 	update_status_bar("Type \"start\" to begin or \"quit\" to exit.")
+# 	path = INSTALL_DIR +"corgi_motivation_screwoff.png"
 # 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 # 	img2 = ImageTk.PhotoImage(Image.open(path))
 # 	panel.config(image=img2)
@@ -417,14 +439,14 @@ def scene6_2_feedafternap():
 # 	scene_number.changeScene(11.1)
 
 def scene11_game_over():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
+	# global path
 
 	entry_field.config(state=NORMAL, bg="white")
-	status_text.set("Game Over!  Type \"start\" to start over or \"quit\" to exit.")
-	path = os.getcwd()+"/sad.png"
+	update_status_bar("Game Over!  Type \"start\" to start over or \"quit\" to exit.")
+	path = INSTALL_DIR +"sad.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -433,14 +455,14 @@ def scene11_game_over():
 	scene_number.changeScene(11.1)
 
 def scene12_anagramgame_instructions():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
+	# global path
 
 	entry_field.config(state=NORMAL, bg="white")
-	status_text.set("Type \"begin\" to start the mini game.")
-	path = os.getcwd()+"/corgi_instructions_game.png"
+	update_status_bar("Type \"begin\" to start the mini game.")
+	path = INSTALL_DIR +"corgi_instructions_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -449,15 +471,15 @@ def scene12_anagramgame_instructions():
 	scene_number.changeScene(12)
 
 def scene12_1_anagramgame_firstanagram():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
+	# global path
 	global theriddle
 
 	entry_field.config(state=NORMAL, bg="white")
-	status_text.set("Solve this anagram: " + theriddle.getRiddle())
-	path = os.getcwd()+"/corgi_firstframe_game.png"
+	update_status_bar("Solve this anagram: " + theriddle.getRiddle())
+	path = INSTALL_DIR +"corgi_firstframe_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -466,16 +488,16 @@ def scene12_1_anagramgame_firstanagram():
 	scene_number.changeScene(12.1)
 
 def scene12_2_anagramgame_secondanagram():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
+	# global path
 	global theriddle
 
 	theriddle = Riddle(1)
 	entry_field.config(state=NORMAL, bg="white")
-	status_text.set("Solve this anagram: " + theriddle.getRiddle())
-	path = os.getcwd()+"/corgi_secondframe_game.png"
+	update_status_bar("Solve this anagram: " + theriddle.getRiddle())
+	path = INSTALL_DIR +"corgi_secondframe_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -484,16 +506,16 @@ def scene12_2_anagramgame_secondanagram():
 	scene_number.changeScene(12.2)
 
 def scene12_3_anagramgame_thirdanagram():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
+	# global path
 	global theriddle
 
 	theriddle = Riddle(2)
 	entry_field.config(state=NORMAL, bg="white")
-	status_text.set("Solve this anagram: " + theriddle.getRiddle())
-	path = os.getcwd()+"/corgi_thirdframe_game.png"
+	update_status_bar("Solve this anagram: " + theriddle.getRiddle())
+	path = INSTALL_DIR +"corgi_thirdframe_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -503,26 +525,25 @@ def scene12_3_anagramgame_thirdanagram():
 	scene_number.changeScene(12.3)
 
 def scene12_4_anagramgame_success():
-	global status_text
+	# global status_text
 	global current_input
 	global entry_field
-	global path
+	# global path
 
 	panel.after(1000, panel.update_idletasks())
 
 	interval = 3000 
-	status_text.set('')
-	status_text.set("*bork bork bork* (Thank you for encouraging me!)")
+	update_status_bar("*bork bork bork* (Thank you for encouraging me!)")
 	entry_field.config(state=DISABLED, disabledbackground="gray")
-	path = os.getcwd()+"/corgi_win_game.png"
+	path = INSTALL_DIR +"corgi_win_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 
-	status_text.set("")
-	path = os.getcwd()+"/corgi_success_game.png"
+	update_status_bar("")
+	path = INSTALL_DIR +"corgi_success_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -543,8 +564,8 @@ master.title(WINDOW_TITLE)
 master.geometry(WINDOW_HEIGHT+"x"+WINDOW_WIDTH)
 master.configure(background=WINDOW_COLOR)
 
-path = os.getcwd()+"/home.png"
-status_text = StringVar()
+path = INSTALL_DIR +"home.png"
+# status_text = StringVar()
 
 #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 img = ImageTk.PhotoImage(Image.open(path))
@@ -555,9 +576,9 @@ panel = Label(master, image = img)
 #The Pack geometry manager packs widgets in rows or columns.
 panel.pack(side = "top", fill = "both", expand="yes")
 
-status = Label(master, textvariable=status_text, background=WINDOW_COLOR)
-status.pack(side="bottom", anchor="sw")
-status_text.set("Welcome to " + WINDOW_TITLE + "! Starting up..." )
+status = Label(master, textvariable="", relief=SUNKEN, bd=1, anchor="w", background=WINDOW_COLOR)
+status.pack(side="bottom", anchor="s", fill="x")
+update_status_bar("Welcome to " + WINDOW_TITLE + "! Starting up..." )
 
 entry_field = Entry(master, textvariable=current_input, disabledbackground="gray", state=DISABLED)
 entry_field.configure(bd=3,width=WINDOW_WIDTH)
