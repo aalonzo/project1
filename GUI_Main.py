@@ -239,9 +239,12 @@ def scene2():
 	# global status_text
 	global current_input
 	global entry_field
+
+	choiceA.config(text="Let's go to the bathroom for a bath.", command=lambda: scene3_1_takeabath())
+	choiceB.config(text="Let's stay in the living room and play with toys", command=lambda: scene3_2_backyardorbath())
 	# global path
 	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
-	path = INSTALL_DIR +"2_button.png"
+	path = INSTALL_DIR +"2.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -316,6 +319,9 @@ def scene3_2_backyardorbath():
 	panel.config(image=img2)
 	panel.image=img2
 	scene_number.changeScene(3.2)
+
+	choiceA.config(text="Sure buddy, anything for you!", command=lambda: scene4_1_playinbackyard())
+	choiceB.config(text="Why don't we get some stairs exercises\ndone for that booty instead!", command=lambda: scene4_2_exercisethatbooty())
 
 def scene4_1_playinbackyard():
 	# global status_text
