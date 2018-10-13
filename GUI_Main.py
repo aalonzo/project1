@@ -169,6 +169,7 @@ def check_input():
 	if current_input != "start" and current_input != "quit" and current_input != "save" and current_input.upper() != "load" and current_input.upper() != "A" and current_input.upper() != "B" and (scene_number.getNum() < 12 or scene_number.getNum() > 12.4):
 		update_status_bar("\"" + current_input + "\" is not a valid input.")
 
+
 def scene0_instructions():
 	global choiceA
 	global choiceB
@@ -266,6 +267,11 @@ def scene3_1_takeabath():
 	global entry_field
 	# global path
 
+	# scene0 is where we want the buttons and the frame they're in to be packed,
+	# as we don't want them to show on the title screen.
+	choiceA.pack(in_=bottom_button_frame, side="left", ipadx=5, ipady=5, padx=BUTTON_SPACING)
+	choiceB.pack(in_=bottom_button_frame, side="left", ipadx=5, ipady=5, padx=BUTTON_SPACING)
+	
 	interval = 3000 
 	update_status_bar('')
 	update_status_bar("You and Max go to the bathroom for a bath!")
@@ -293,6 +299,9 @@ def scene3_1_takeabath():
 	panel.config(image=img2)
 	panel.image=img2
 
+	choiceA.config(text="Dry off in the kitchen", command=lambda: scene5_1_kitchenformeal())
+	choiceB.config(text="Take a nap in the bedroom", command=lambda: scene6_1_takeanap())
+		
 	scene_number.changeScene(3.1)
 	
 def scene3_2_backyardorbath():
@@ -355,6 +364,9 @@ def scene4_1_playinbackyard():
 
 	 # after 1000ms
 	scene_number.changeScene(4.1)
+	
+	choiceA.config(text="Head to the kitchen", command=lambda: scene5_1_kitchenformeal())
+	choiceB.config(text="Take a nap", command=lambda: scene6_1_takeanap())
 
 def scene4_2_exercisethatbooty():
 	# global status_text
@@ -368,6 +380,9 @@ def scene4_2_exercisethatbooty():
 	panel.config(image=img2)
 	panel.image=img2
 	scene_number.changeScene(4.2)
+	
+	choiceA.config(text="Lets go for it!", command=lambda: scene12_anagramgame_instructions())
+	choiceB.config(text="You can do it on your own", command=lambda: scene11_game_over())
 
 def scene5_1_kitchenformeal():
 	# global status_text
@@ -402,6 +417,9 @@ def scene5_1_kitchenformeal():
 	panel.image=img2
 
 	scene_number.changeScene(5.1)
+	
+	choiceA.config(text="Take a nap", command=lambda: scene6_1_takeanap())
+	choiceB.config(text="Take a bath", command=lambda: scene3_1_takeabath())
 
 def scene6_1_takeanap():
 	# global status_text
