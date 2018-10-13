@@ -572,6 +572,11 @@ def scene12_2_anagramgame_secondanagram():
 	global entry_field
 	# global path
 	global theriddle
+	global choiceA
+	global choiceB
+
+	choiceA.config(text="Submit", command=lambda: check_imput())
+	choiceB.config(text="Clear", command=lambda: entry_field.delete(0, END))
 
 	theriddle = Riddle(1)
 	entry_field.config(state=NORMAL, bg="white")
@@ -581,6 +586,7 @@ def scene12_2_anagramgame_secondanagram():
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
 	panel.image=img2
+
 
 	scene_number.changeScene(12.2)
 
