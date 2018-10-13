@@ -31,12 +31,12 @@ class scene_num():
 # to make it read only, we have to set the state to normal so the text can be edited.
 # according to the documentation, you delete text by specifying the arguments below.
 # once written, you set the state to disabled, giving you a read-only dialog box!
-def update_text_box(text_dialog):
-	global bottom_button_frame
-	bottom_button_frame.configure(state='normal') 
-	bottom_button_frame.delete(1.0, END)
-	bottom_button_frame.insert(END, text_dialog)
-	bottom_button_frame.configure(state='disabled') 
+# def update_text_box(text_dialog):
+# 	global dialog_box
+# 	dialog_box.configure(state='normal') 
+# 	dialog_box.delete(1.0, END)
+# 	dialog_box.insert(END, text_dialog)
+# 	dialog_box.configure(state='disabled') 
 
 # this function updates the status bar to whatever we want.
 # to make it read only, we have to set the state to normal so the text can be edited.
@@ -209,6 +209,11 @@ def scene1_intro():
 	# global status_text
 	global current_input
 	global entry_field
+	# global dialog_box
+
+	# dialog_box.pack(side="bottom", anchor="s", fill="none", ipadx=5, ipady=5)
+	# update_text_box("Hiya! I was brought home by you!  I'm so excited to take a look around!  Everything looks so brand new and fun!  Will you help me look around and play with me?")
+
 
 	# whoever had this one, I ended up adding the buttons for you!
 	# this should give you an idea of what we want for now.
@@ -631,6 +636,8 @@ panel = Label(master, image = img)
 
 #The Pack geometry manager packs widgets in rows or columns.
 panel.pack(side = "top", fill = "both", expand="yes")
+
+# dialog_box = Text(master, bd=10, highlightbackground="black", height=10, width=80)
 
 ''' USE THIS FRAME TO PACK YOUR BUTTONS ONTO!!! '''
 ''' Access this in your methods via global bottom_button_frame '''
