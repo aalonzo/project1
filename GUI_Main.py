@@ -27,6 +27,17 @@ class scene_num():
 	def getNum(self):
 		return self.num
 
+# this function updates the text box to whatever we want.
+# to make it read only, we have to set the state to normal so the text can be edited.
+# according to the documentation, you delete text by specifying the arguments below.
+# once written, you set the state to disabled, giving you a read-only dialog box!
+def update_text_box(text_dialog):
+	global bottom_button_frame
+	bottom_button_frame.configure(state='normal') 
+	bottom_button_frame.delete(1.0, END)
+	bottom_button_frame.insert(END, text_dialog)
+	bottom_button_frame.configure(state='disabled') 
+
 # this function updates the status bar to whatever we want.
 # to make it read only, we have to set the state to normal so the text can be edited.
 # according to the documentation, you delete text by specifying the arguments below.
@@ -159,10 +170,32 @@ def check_input():
 		update_status_bar("\"" + current_input + "\" is not a valid input.")
 
 def scene0_instructions():
+	global choiceA
+	global choiceB
+	global bottom_button_frame
 	# global status_text
 	global current_input
 	global entry_field
 	# global path
+
+	# whoever had this one, I ended up adding the buttons for you!
+	# this should give you an idea of what we want for now.
+	# you use the global keywords on choiceA and choiceB (the variables for these
+	# are in the code at the very bottom)
+	# to change the button text at any time, simply call the config function,
+	# change the text attribute to whatever you want, and call the appropriate scene 
+	# as demonstrated below.
+	choiceA.config(text="Start Game", command=lambda: scene1_intro())
+	choiceB.config(text="Quit", command=lambda: master.destroy())
+
+	# scene0 is where we want the buttons and the frame they're in to be packed,
+	# as we don't want them to show on the title screen.
+	choiceA.pack(in_=bottom_button_frame, side="left", ipadx=5, ipady=5, padx=BUTTON_SPACING)
+	choiceB.pack(in_=bottom_button_frame, side="left", ipadx=5, ipady=5, padx=BUTTON_SPACING)
+
+	# pack the frame we made onto the window
+	# !!!! DO NOT COPY AND PASTE THIS IN ANY OTHER SCENE EXCEPT WHERE NOTED !!!!!!!
+	bottom_button_frame.pack(side="bottom", anchor="s")
 
 	entry_field.config(state=NORMAL, bg="white")
 	update_status_bar("Type \"start\" to begin or \"quit\" to exit.")
@@ -176,6 +209,17 @@ def scene1_intro():
 	# global status_text
 	global current_input
 	global entry_field
+
+	# whoever had this one, I ended up adding the buttons for you!
+	# this should give you an idea of what we want for now.
+	# you use the global keywords on choiceA and choiceB (the variables for these
+	# are in the code at the very bottom)
+	# to change the button text at any time, simply call the config function,
+	# change the text attribute to whatever you want, and call the appropriate scene 
+	# as demonstrated below.
+	choiceA.config(text="Yes!", command=lambda: scene2())
+	choiceB.config(text="Nah, bye.", command=lambda: scene11_game_over())
+
 	# global path
 	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
 	path = INSTALL_DIR +"1_button.png"
@@ -440,12 +484,24 @@ def scene6_2_feedafternap():
 
 def scene11_game_over():
 	# global status_text
+	global choiceA
+	global choiceB
 	global current_input
 	global entry_field
 	# global path
 
+	# whoever had this one, I ended up adding the buttons for you!
+	# this should give you an idea of what we want for now.
+	# you use the global keywords on choiceA and choiceB (the variables for these
+	# are in the code at the very bottom)
+	# to change the button text at any time, simply call the config function,
+	# change the text attribute to whatever you want, and call the appropriate scene 
+	# as demonstrated below.
+	choiceA.config(text="Play Again", command=lambda: scene1_intro())
+	choiceB.config(text="Quit", command=lambda: master.destroy())
+
 	entry_field.config(state=NORMAL, bg="white")
-	update_status_bar("Game Over!  Type \"start\" to start over or \"quit\" to exit.")
+	update_status_bar("You're a bad owner!  Click \"Play Again\" to start over, or \"Quit\" to quit.")
 	path = INSTALL_DIR +"sad.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
@@ -575,6 +631,16 @@ panel = Label(master, image = img)
 
 #The Pack geometry manager packs widgets in rows or columns.
 panel.pack(side = "top", fill = "both", expand="yes")
+
+''' USE THIS FRAME TO PACK YOUR BUTTONS ONTO!!! '''
+''' Access this in your methods via global bottom_button_frame '''
+# frame for the buttons.  made so they can be all on the same line.
+# the background has been filled with red to demonstrate how the frame
+# is laid onto the window.
+bottom_button_frame = Frame(master, background=WINDOW_COLOR, width=100)
+
+choiceA = Button(text="")
+choiceB = Button(text="")
 
 status = Label(master, textvariable="", relief=SUNKEN, bd=1, anchor="w", background=WINDOW_COLOR)
 status.pack(side="bottom", anchor="s", fill="x")
