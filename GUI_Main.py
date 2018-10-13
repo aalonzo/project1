@@ -539,6 +539,9 @@ def scene12_anagramgame_instructions():
 	global entry_field
 	# global path
 
+	choiceA.config(text="Let's help him!", command=lambda: scene12_1_anagramgame_firstanagram())
+	choiceB.config(text="He can stay downstairs for all I care.", command=lambda: scene11_game_over())
+
 	entry_field.config(state=NORMAL, bg="white")
 	update_status_bar("Type \"begin\" to start the mini game.")
 	path = INSTALL_DIR +"corgi_instructions_game.png"
@@ -555,6 +558,9 @@ def scene12_1_anagramgame_firstanagram():
 	global entry_field
 	# global path
 	global theriddle
+
+	choiceA.config(text="Submit", command=lambda: check_input())
+	choiceB.config(text="Clear", command=lambda: entry_field.delete(0, END))
 
 	entry_field.config(state=NORMAL, bg="white")
 	update_status_bar("Solve this anagram: " + theriddle.getRiddle())
@@ -575,7 +581,7 @@ def scene12_2_anagramgame_secondanagram():
 	global choiceA
 	global choiceB
 
-	choiceA.config(text="Submit", command=lambda: check_imput())
+	choiceA.config(text="Submit", command=lambda: check_input())
 	choiceB.config(text="Clear", command=lambda: entry_field.delete(0, END))
 
 	theriddle = Riddle(1)
