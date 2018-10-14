@@ -253,9 +253,15 @@ def scene2():
 	
 def scene10():
 	# global status_text
+	global choiceA
+	global choiceB
 	global current_input
 	global entry_field
 	# global path
+	
+	choiceA.config(text="Back to Start", command=lambda: scene1_intro())
+	choiceB.config(text="Exit Game", command=lambda: master.destroy))
+	
 	update_status_bar("Thanks for playing!  Type \"start\" to play again, or \"quit\" to quit the game.")
 	path = INSTALL_DIR +"end.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
@@ -428,6 +434,8 @@ def scene5_1_kitchenformeal():
 	choiceB.config(text="Take a bath", command=lambda: scene3_1_takeabath())
 
 def scene6_1_takeanap():
+	global choiceA
+	global choiceB
 	# global status_text
 	global current_input
 	global entry_field
@@ -460,7 +468,9 @@ def scene6_1_takeanap():
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 
-
+	choiceA.config(text="Feed Max", command=lambda: scene6_2_feedafternap())
+	choiceB.config(text="Get your own food, you parasite!", command=lambda: scene11_game_over())
+	
 	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
 	path = INSTALL_DIR +"corgi_question_bed.png"
