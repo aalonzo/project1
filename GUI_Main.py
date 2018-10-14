@@ -7,9 +7,10 @@ from Riddles import Riddle
 BUTTON_SPACING = 50
 INSTALL_DIR = os.getcwd() + "/"
 WINDOW_TITLE = "Corgi Adventures"
+IMG_FRM_COLOR = '#d3d3d3'
 WINDOW_COLOR = '#BEBEBE'
-WINDOW_WIDTH = "820"
-WINDOW_HEIGHT = "1124"
+WINDOW_WIDTH = "780"
+WINDOW_HEIGHT = "1024"
 
 current_input = ""
 
@@ -55,6 +56,15 @@ def update_sceneimg(img_filepath):
 	img = ImageTk.PhotoImage(Image.open(img_filepath))
 	bg_image_widget.config(image=img)
 	bg_image_widget.image=img
+
+def save():
+	global status
+	save_file = open(INSTALL_DIR +"save.txt", "w+")
+	save_file.write(str(scene_number.getNum()))
+	save_file.close()
+	update_status_bar("Your progress was saved.")
+	return None
+
 		
 def check_input():
 	# global status_text
@@ -66,87 +76,59 @@ def check_input():
 	current_input = entry_field.get()
 	entry_field.delete(0, END)
 
+	
 	# intro scene, which starts out asking the player whether they want to play
 	# or just tell the corgi to go away
-	if current_input == "start":
-		scene1_intro()
-		return None
+	# if current_input == "start":
+	# 	scene1_intro()
+	# 	return None
 
-	# tells the program to quit.  Can take place at any time.
-	if current_input == "quit":
-		master.destroy()
-
-	# tells the program to save wherever the user is at.
-	if current_input == "save":
-		save_file = open(os.getcwd()+"/save.txt", "w+")
-		save_file.write(str(scene_number.getNum()))
-		save_file.close()
-		update_status_bar("Your progress was saved.")
-		return None
+	# # tells the program to quit.  Can take place at any time.
+	# if current_input == "quit":
+	# 	master.destroy()
 
 	# tells the program to save wherever the user is at.
-	if current_input == "load":
-		viableSaves = ["1","2","3.1"]
-		save_file = open(os.getcwd()+"/save.txt", "r")
-		loadednum = save_file.read(scene_number.getNum())
-		save_file.close()
-		if not loadednum in viableSaves:
-			return "error, save corrupted"
-		return "Take me to the correct scene don't return anything"
+	# if current_input == "save":
+	# 	save_file = open(os.getcwd()+"/save.txt", "w+")
+	# 	save_file.write(str(scene_number.getNum()))
+	# 	save_file.close()
+	# 	update_status_bar("Your progress was saved.")
+	# 	return None
+
+	# tells the program to save wherever the user is at.
+	# if current_input == "load":
+	# 	viableSaves = ["1","2","3.1"]
+	# 	save_file = open(os.getcwd()+"/save.txt", "r")
+	# 	loadednum = save_file.read(scene_number.getNum())
+	# 	save_file.close()
+	# 	if not loadednum in viableSaves:
+	# 		return "error, save corrupted"
+	# 	return "Take me to the correct scene don't return anything"
 	# the choice branch for the first scene.
 	# if choice A, goes to the scene where it asks to play in the backyard.
 	# if choice B, ends the game and gives the user the option to play again 
 	# or quit the game entirely.
 	if scene_number.getNum() == 1:
-		if current_input.upper() == "A":
-			scene2()
-		if current_input.upper() == "B":
-			scene11_game_over()
+		scene1_intro()
 	# triggers the choices for the second scene, where the corgi asks the user 
-	# what they want to do.
-	# if choice A, it goes to the scene where they play in the backyard.
-	# if choice B, it goes to the stair climbing scene, which is where the minigame takes place.
 	elif scene_number.getNum() == 2:
-		if current_input.upper() == "A":
-			scene3_1_takeabath()
-		if current_input.upper() == "B":
-			scene3_2_backyardorbath()
+		scene2()
 	elif scene_number.getNum() == 3.1:
-		if current_input.upper() == "A":
-			scene5_1_kitchenformeal()
-		if current_input.upper() == "B":
-			scene6_1_takeanap()
+		scene3_1_takeabath()
 	elif scene_number.getNum() == 3.2:
-		if current_input.upper() == "A":
-			scene4_1_playinbackyard()
-		if current_input.upper() == "B":
-			scene4_2_exercisethatbooty()
+		scene3_2_backyardorbath()
 	elif scene_number.getNum() == 4.1:
-		if current_input.upper() == "A":
-			scene5_1_kitchenformeal()
-		if current_input.upper() == "B":
-			scene6_1_takeanap()
+		scene4_1_playinbackyard()
 	elif scene_number.getNum() == 4.2:
-		if current_input.upper() == "A":
-			# if not enough time, fall back to skipping straight to nap.
-			scene12_anagramgame_instructions()
-		if current_input.upper() == "B":
-			scene11_game_over()
+		scene4_2_exercisethatbooty()
 	elif scene_number.getNum() == 5.1:
-		if current_input.upper() == "A":
-			scene6_1_takeanap()
-		if current_input.upper() == "B":
-			scene3_1_takeabath()
+		scene5_1_kitchenformeal()
 	elif scene_number.getNum() == 6.1:
-		if current_input.upper() == "A":
-			scene6_2_feedafternap()
-		if current_input.upper() == "B":
-			scene11_game_over()	
+		scene6_1_takeanap()
+	elif scene_number.getNum() == 6.2:
+		scene6_2_feedafternap()
 	elif scene_number.getNum() == 12:
-		if current_input == "begin":
-			scene12_1_anagramgame_firstanagram()
-		else:
-			update_status_bar("\""+ current_input + "\" doesn't begin the game.")
+		scene12_1_anagramgame_firstanagram()
 
 	elif scene_number.getNum() == 12.1:
 		if theriddle.getSolution(current_input):
@@ -165,9 +147,20 @@ def check_input():
 			update_status_bar("Oh no! That guess was wrong!")
 	elif scene_number.getNum() == 12.4:
 			scene6_1_takeanap()
-	# if the input given does not match anything we don't support, we tell the user it is invalid input.
-	if current_input != "start" and current_input != "quit" and current_input != "save" and current_input.upper() != "load" and current_input.upper() != "A" and current_input.upper() != "B" and (scene_number.getNum() < 12 or scene_number.getNum() > 12.4):
-		update_status_bar("\"" + current_input + "\" is not a valid input.")
+	# # if the input given does not match anything we don't support, we tell the user it is invalid input.
+	# if current_input != "start" and current_input != "quit" and current_input != "save" and current_input.upper() != "load" and current_input.upper() != "A" and current_input.upper() != "B" and (scene_number.getNum() < 12 or scene_number.getNum() > 12.4):
+	# 	update_status_bar("\"" + current_input + "\" is not a valid input.")
+
+def load():
+	global status
+	save_file = open(INSTALL_DIR+"save.txt", "r")
+	loadednum = float(save_file.read())
+	save_file.close()
+	update_status_bar("Loading...")
+	print(1.0==1)
+	scene_number.changeScene(loadednum)
+	update_status_bar("Loaded " + str(scene_number.getNum()))
+	check_input()
 
 
 def scene0_instructions():
@@ -177,6 +170,8 @@ def scene0_instructions():
 	# global status_text
 	global current_input
 	global entry_field
+	global saveGame
+	global loadGame
 	# global path
 
 	# whoever had this one, I ended up adding the buttons for you!
@@ -189,17 +184,23 @@ def scene0_instructions():
 	choiceA.config(text="Start Game", command=lambda: scene1_intro())
 	choiceB.config(text="Quit", command=lambda: master.destroy())
 
+
 	# scene0 is where we want the buttons and the frame they're in to be packed,
 	# as we don't want them to show on the title screen.
 	choiceA.pack(in_=bottom_button_frame, side="left", ipadx=5, ipady=5, padx=BUTTON_SPACING)
 	choiceB.pack(in_=bottom_button_frame, side="left", ipadx=5, ipady=5, padx=BUTTON_SPACING)
+
+	loadGame.pack(in_=bottom_button_frame, side="right", ipadx=5, ipady=5)
+	saveGame.pack(in_=bottom_button_frame, side="right", ipadx=5, ipady=5)
+	loadGame.config(state=NORMAL)
+	saveGame.config(state=DISABLED)
 
 	# pack the frame we made onto the window
 	# !!!! DO NOT COPY AND PASTE THIS IN ANY OTHER SCENE EXCEPT WHERE NOTED !!!!!!!
 	bottom_button_frame.pack(side="bottom", anchor="s")
 
 	entry_field.config(state=NORMAL, bg="white")
-	update_status_bar("Type \"start\" to begin or \"quit\" to exit.")
+	update_status_bar("Press \"Start Game\" to play, or \"Quit\" to quit.")
 	path = INSTALL_DIR +"inst.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
@@ -211,6 +212,8 @@ def scene1_intro():
 	global current_input
 	global entry_field
 	# global dialog_box
+
+	saveGame.config(state=NORMAL)
 
 	# dialog_box.pack(side="bottom", anchor="s", fill="none", ipadx=5, ipady=5)
 	# update_text_box("Hiya! I was brought home by you!  I'm so excited to take a look around!  Everything looks so brand new and fun!  Will you help me look around and play with me?")
@@ -227,7 +230,7 @@ def scene1_intro():
 	choiceB.config(text="Nah, bye.", command=lambda: scene11_game_over())
 
 	# global path
-	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	update_status_bar("You and Max walk into the house.  He seems curious!")
 	path = INSTALL_DIR +"1_button.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
@@ -243,7 +246,7 @@ def scene2():
 	choiceA.config(text="Let's go to the bathroom for a bath.", command=lambda: scene3_1_takeabath())
 	choiceB.config(text="Let's stay in the living room and play with toys", command=lambda: scene3_2_backyardorbath())
 	# global path
-	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	update_status_bar("Help Max decide where to play!")
 	path = INSTALL_DIR +"2.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
@@ -260,7 +263,8 @@ def scene10():
 	# global path
 	
 	choiceA.config(text="Back to Start", command=lambda: scene1_intro())
-	choiceB.config(text="Exit Game", command=lambda: master.destroy))
+	choiceB.config(text="Exit Game", command=lambda: master.destroy())
+	saveGame.config(state=DISABLED)
 	
 	update_status_bar("Thanks for playing!  Type \"start\" to play again, or \"quit\" to quit the game.")
 	path = INSTALL_DIR +"end.png"
@@ -276,10 +280,14 @@ def scene3_1_takeabath():
 	global entry_field
 	# global path
 
-	# scene0 is where we want the buttons and the frame they're in to be packed,
-	# as we don't want them to show on the title screen.
-	choiceA.pack(in_=bottom_button_frame, side="left", ipadx=5, ipady=5, padx=BUTTON_SPACING)
-	choiceB.pack(in_=bottom_button_frame, side="left", ipadx=5, ipady=5, padx=BUTTON_SPACING)
+	# # scene0 is where we want the buttons and the frame they're in to be packed,
+	# # as we don't want them to show on the title screen.
+	# choiceA.pack(in_=bottom_button_frame, side="left", ipadx=5, ipady=5, padx=BUTTON_SPACING)
+	# choiceB.pack(in_=bottom_button_frame, side="left", ipadx=5, ipady=5, padx=BUTTON_SPACING)
+	choiceA.config(state=DISABLED)
+	choiceB.config(state=DISABLED)
+	saveGame.config(state=DISABLED)
+	loadGame.config(state=DISABLED)
 	
 	interval = 3000 
 	update_status_bar('')
@@ -300,7 +308,12 @@ def scene3_1_takeabath():
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 
-	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	choiceA.config(text="Dry off in the kitchen", command=lambda: scene5_1_kitchenformeal(), state=NORMAL)
+	choiceB.config(text="Take a nap in the bedroom", command=lambda: scene6_1_takeanap(), state=NORMAL)
+	saveGame.config(state=NORMAL)
+	loadGame.config(state=NORMAL)
+
+	update_status_bar("Max gets out of the bathtub.  He sure is squeaky clean!")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
 	path = INSTALL_DIR +"corgi_button_bath.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
@@ -308,9 +321,6 @@ def scene3_1_takeabath():
 	panel.config(image=img2)
 	panel.image=img2
 
-	choiceA.config(text="Dry off in the kitchen", command=lambda: scene5_1_kitchenformeal())
-	choiceB.config(text="Take a nap in the bedroom", command=lambda: scene6_1_takeanap())
-		
 	scene_number.changeScene(3.1)
 	
 def scene3_2_backyardorbath():
@@ -318,7 +328,7 @@ def scene3_2_backyardorbath():
 	global current_input
 	global entry_field
 	# global path
-	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	update_status_bar("Max plays with his toys, but still has lots of energy!")
 	path = INSTALL_DIR +"corgi_ask_backyard.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
@@ -334,6 +344,11 @@ def scene4_1_playinbackyard():
 	global current_input
 	global entry_field
 	# global path
+
+	choiceA.config(state=DISABLED)
+	choiceB.config(state=DISABLED)
+	saveGame.config(state=DISABLED)
+	loadGame.config(state=DISABLED)
 
 	interval = 2000 
 	update_status_bar("You and Max are having fun in the backyard!")
@@ -365,7 +380,7 @@ def scene4_1_playinbackyard():
 	# panel.config(image=img2) 
 	# panel.image=img2	
 
-	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	update_status_bar("Max is tuckered out from playing so much.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
 	path = INSTALL_DIR +"corgi_backyard_button.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
@@ -377,15 +392,17 @@ def scene4_1_playinbackyard():
 	 # after 1000ms
 	scene_number.changeScene(4.1)
 	
-	choiceA.config(text="Head to the kitchen", command=lambda: scene5_1_kitchenformeal())
-	choiceB.config(text="Take a nap", command=lambda: scene6_1_takeanap())
+	choiceA.config(text="Head to the kitchen", command=lambda: scene5_1_kitchenformeal(), state=NORMAL)
+	choiceB.config(text="Take a nap", command=lambda: scene6_1_takeanap(), state=NORMAL)
+	saveGame.config(state=NORMAL)
+	loadGame.config(state=NORMAL)
 
 def scene4_2_exercisethatbooty():
 	# global status_text
 	global current_input
 	global entry_field
 	# global path
-	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	update_status_bar("Max stares at the tall staircase.")
 	path = INSTALL_DIR +"corgi_motivation_screwoff.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
@@ -394,13 +411,18 @@ def scene4_2_exercisethatbooty():
 	scene_number.changeScene(4.2)
 	
 	choiceA.config(text="Lets go for it!", command=lambda: scene12_anagramgame_instructions())
-	choiceB.config(text="You can do it on your own", command=lambda: scene11_game_over())
+	choiceB.config(text="You can do it on your own.", command=lambda: scene11_game_over())
 
 def scene5_1_kitchenformeal():
 	# global status_text
 	global current_input
 	global entry_field
 	# global path
+
+	choiceA.config(state=DISABLED)
+	choiceB.config(state=DISABLED)
+	saveGame.config(state=DISABLED)
+	loadGame.config(state=DISABLED)
 
 	interval = 3000 
 	update_status_bar('')
@@ -420,7 +442,7 @@ def scene5_1_kitchenformeal():
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
 
-	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	update_status_bar("Max feels satisfied.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
 	path = INSTALL_DIR +"corgi_kitchen_question.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
@@ -430,8 +452,10 @@ def scene5_1_kitchenformeal():
 
 	scene_number.changeScene(5.1)
 	
-	choiceA.config(text="Take a nap", command=lambda: scene6_1_takeanap())
-	choiceB.config(text="Take a bath", command=lambda: scene3_1_takeabath())
+	choiceA.config(text="Take a nap", command=lambda: scene6_1_takeanap(), state=NORMAL)
+	choiceB.config(text="Take a bath", command=lambda: scene3_1_takeabath(), state=NORMAL)
+	saveGame.config(state=NORMAL)
+	loadGame.config(state=NORMAL)
 
 def scene6_1_takeanap():
 	global choiceA
@@ -440,6 +464,11 @@ def scene6_1_takeanap():
 	global current_input
 	global entry_field
 	# global path
+
+	choiceA.config(state=DISABLED)
+	choiceB.config(state=DISABLED)
+	saveGame.config(state=DISABLED)
+	loadGame.config(state=DISABLED)
 
 	interval = 2000 
 	 
@@ -467,11 +496,8 @@ def scene6_1_takeanap():
 	panel.config(image=img2)
 	panel.image=img2
 	panel.after(interval, panel.update_idletasks())
-
-	choiceA.config(text="Feed Max", command=lambda: scene6_2_feedafternap())
-	choiceB.config(text="Get your own food, you parasite!", command=lambda: scene11_game_over())
 	
-	update_status_bar("Type \"A\" to pick the left choice, or \"B\" to pick the right choice.")
+	update_status_bar("Max woke up!  You pet and kiss him because of how cute he is after naps.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
 	path = INSTALL_DIR +"corgi_question_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
@@ -479,6 +505,11 @@ def scene6_1_takeanap():
 	panel.config(image=img2)
 	panel.image=img2
 	# panel.update_idletasks()
+
+	choiceA.config(text="Feed Max", command=lambda: scene6_2_feedafternap(), state=NORMAL)
+	choiceB.config(text="Make me! Get your own food, you parasite!", command=lambda: scene11_game_over(), state=NORMAL)
+	saveGame.config(state=NORMAL)
+	loadGame.config(state=NORMAL)
 
 	 # after 1000ms
 	scene_number.changeScene(6.1)
@@ -539,6 +570,8 @@ def scene11_game_over():
 	choiceA.config(text="Play Again", command=lambda: scene1_intro())
 	choiceB.config(text="Quit", command=lambda: master.destroy())
 
+	saveGame.config(state=DISABLED)
+
 	entry_field.config(state=NORMAL, bg="white")
 	update_status_bar("You're a bad owner!  Click \"Play Again\" to start over, or \"Quit\" to quit.")
 	path = INSTALL_DIR +"sad.png"
@@ -574,6 +607,8 @@ def scene12_1_anagramgame_firstanagram():
 	global entry_field
 	# global path
 	global theriddle
+
+	entry_field.pack(side="bottom", anchor='s')
 
 	choiceA.config(text="Submit", command=lambda: check_input())
 	choiceB.config(text="Clear", command=lambda: entry_field.delete(0, END))
@@ -637,7 +672,15 @@ def scene12_4_anagramgame_success():
 	global entry_field
 	# global path
 
+	choiceA.config(state=DISABLED)
+	choiceB.config(state=DISABLED)
+	saveGame.config(state=DISABLED)
+	loadGame.config(state=DISABLED)
+
 	panel.after(1000, panel.update_idletasks())
+
+
+	entry_field.pack_forget()
 
 	interval = 3000 
 	update_status_bar("*bork bork bork* (Thank you for encouraging me!)")
@@ -669,7 +712,7 @@ master = Tk()
 
 master.title(WINDOW_TITLE)
 master.geometry(WINDOW_HEIGHT+"x"+WINDOW_WIDTH)
-master.configure(background=WINDOW_COLOR)
+master.configure(background=IMG_FRM_COLOR)
 
 path = INSTALL_DIR +"home.png"
 # status_text = StringVar()
@@ -678,10 +721,12 @@ path = INSTALL_DIR +"home.png"
 img = ImageTk.PhotoImage(Image.open(path))
 
 #The Label widget is a standard Tkinter widget used to display a text or image on the screen.
-panel = Label(master, image = img)
+panel = Label(master, image = img, background=IMG_FRM_COLOR)
 
 #The Pack geometry manager packs widgets in rows or columns.
 panel.pack(side = "top", fill = "both", expand="yes")
+#place(relx=0.5, rely=0.5, anchor=CENTER)
+
 
 # dialog_box = Text(master, bd=10, highlightbackground="black", height=10, width=80)
 
@@ -690,10 +735,12 @@ panel.pack(side = "top", fill = "both", expand="yes")
 # frame for the buttons.  made so they can be all on the same line.
 # the background has been filled with red to demonstrate how the frame
 # is laid onto the window.
-bottom_button_frame = Frame(master, background=WINDOW_COLOR, width=100)
+bottom_button_frame = Frame(master, background=IMG_FRM_COLOR, width=100)
 
 choiceA = Button(text="")
 choiceB = Button(text="")
+saveGame = Button(text="Save", command=lambda: save())
+loadGame = Button(text="Load", command=lambda: load())
 
 status = Label(master, textvariable="", relief=SUNKEN, bd=1, anchor="w", background=WINDOW_COLOR)
 status.pack(side="bottom", anchor="s", fill="x")
@@ -701,7 +748,7 @@ update_status_bar("Welcome to " + WINDOW_TITLE + "! Starting up..." )
 
 entry_field = Entry(master, textvariable=current_input, disabledbackground="gray", state=DISABLED)
 entry_field.configure(bd=3,width=WINDOW_WIDTH)
-entry_field.pack(side="bottom", anchor='s')
+# entry_field.pack(side="bottom", anchor='s')
 
 panel.after(5000, lambda: scene0_instructions() ) # after 1000ms
 
