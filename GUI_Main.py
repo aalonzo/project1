@@ -612,6 +612,8 @@ def scene12_1_anagramgame_firstanagram():
 
 	choiceA.config(text="Submit", command=lambda: check_input())
 	choiceB.config(text="Clear", command=lambda: entry_field.delete(0, END))
+	saveGame.config(state=DISABLED)
+	loadGame.config(state=DISABLED)
 
 	entry_field.config(state=NORMAL, bg="white")
 	update_status_bar("Solve this anagram: " + theriddle.getRiddle())
@@ -674,8 +676,6 @@ def scene12_4_anagramgame_success():
 
 	choiceA.config(state=DISABLED)
 	choiceB.config(state=DISABLED)
-	saveGame.config(state=DISABLED)
-	loadGame.config(state=DISABLED)
 
 	panel.after(1000, panel.update_idletasks())
 
