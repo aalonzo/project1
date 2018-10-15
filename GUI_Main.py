@@ -9,8 +9,9 @@ INSTALL_DIR = os.getcwd() + "/"
 WINDOW_TITLE = "Corgi Adventures"
 IMG_FRM_COLOR = '#d3d3d3'
 WINDOW_COLOR = '#BEBEBE'
-WINDOW_WIDTH = "780"
+WINDOW_WIDTH = "820"
 WINDOW_HEIGHT = "1024"
+SAVE_FILE="save.txt"
 
 current_input = ""
 
@@ -59,13 +60,12 @@ def update_sceneimg(img_filepath):
 
 def save():
 	global status
-	save_file = open(INSTALL_DIR +"save.txt", "w+")
+	save_file = open(INSTALL_DIR +SAVE_FILE, "w+")
 	save_file.write(str(scene_number.getNum()))
 	save_file.close()
 	update_status_bar("Your progress was saved.")
 	return None
 
-		
 def check_input():
 	# global status_text
 	global current_input
@@ -151,13 +151,12 @@ def check_input():
 	# if current_input != "start" and current_input != "quit" and current_input != "save" and current_input.upper() != "load" and current_input.upper() != "A" and current_input.upper() != "B" and (scene_number.getNum() < 12 or scene_number.getNum() > 12.4):
 	# 	update_status_bar("\"" + current_input + "\" is not a valid input.")
 
-def load():
+def load(filename):
 	global status
-	save_file = open(INSTALL_DIR+"save.txt", "r")
+	save_file = open(INSTALL_DIR+filename, "r")
 	loadednum = float(save_file.read())
 	save_file.close()
 	update_status_bar("Loading...")
-	print(1.0==1)
 	scene_number.changeScene(loadednum)
 	update_status_bar("Loaded " + str(scene_number.getNum()))
 	check_input()
@@ -231,7 +230,7 @@ def scene1_intro():
 
 	# global path
 	update_status_bar("You and Max walk into the house.  He seems curious!")
-	path = INSTALL_DIR +"1_button.png"
+	path = INSTALL_DIR +"1.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -266,7 +265,7 @@ def scene10():
 	choiceB.config(text="Exit Game", command=lambda: master.destroy())
 	saveGame.config(state=DISABLED)
 	
-	update_status_bar("Thanks for playing!  Type \"start\" to play again, or \"quit\" to quit the game.")
+	update_status_bar("Thanks for playing!  Click \"Back to Start\" to play again, or \"Quit\" to quit the game.")
 	path = INSTALL_DIR +"end.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
@@ -315,7 +314,7 @@ def scene3_1_takeabath():
 
 	update_status_bar("Max gets out of the bathtub.  He sure is squeaky clean!")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
-	path = INSTALL_DIR +"corgi_button_bath.png"
+	path = INSTALL_DIR +"6_3.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -329,7 +328,7 @@ def scene3_2_backyardorbath():
 	global entry_field
 	# global path
 	update_status_bar("Max plays with his toys, but still has lots of energy!")
-	path = INSTALL_DIR +"corgi_ask_backyard.png"
+	path = INSTALL_DIR +"2.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -382,7 +381,7 @@ def scene4_1_playinbackyard():
 
 	update_status_bar("Max is tuckered out from playing so much.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
-	path = INSTALL_DIR +"corgi_backyard_button.png"
+	path = INSTALL_DIR +"4_3.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -403,7 +402,7 @@ def scene4_2_exercisethatbooty():
 	global entry_field
 	# global path
 	update_status_bar("Max stares at the tall staircase.")
-	path = INSTALL_DIR +"corgi_motivation_screwoff.png"
+	path = INSTALL_DIR +"7_2.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -499,7 +498,7 @@ def scene6_1_takeanap():
 	
 	update_status_bar("Max woke up!  You pet and kiss him because of how cute he is after naps.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
-	path = INSTALL_DIR +"corgi_question_bed.png"
+	path = INSTALL_DIR +"8_4.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
@@ -592,7 +591,7 @@ def scene12_anagramgame_instructions():
 	choiceB.config(text="He can stay downstairs for all I care.", command=lambda: scene11_game_over())
 
 	entry_field.config(state=NORMAL, bg="white")
-	update_status_bar("Type \"begin\" to start the mini game.")
+	update_status_bar("What do you want to do?")
 	path = INSTALL_DIR +"corgi_instructions_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
@@ -724,7 +723,7 @@ img = ImageTk.PhotoImage(Image.open(path))
 panel = Label(master, image = img, background=IMG_FRM_COLOR)
 
 #The Pack geometry manager packs widgets in rows or columns.
-panel.pack(side = "top", fill = "both", expand="yes")
+panel.pack(side = "top", anchor="n", fill = "both", expand="yes")
 #place(relx=0.5, rely=0.5, anchor=CENTER)
 
 
@@ -740,7 +739,7 @@ bottom_button_frame = Frame(master, background=IMG_FRM_COLOR, width=100)
 choiceA = Button(text="")
 choiceB = Button(text="")
 saveGame = Button(text="Save", command=lambda: save())
-loadGame = Button(text="Load", command=lambda: load())
+loadGame = Button(text="Load", command=lambda: load(SAVE_FILE))
 
 status = Label(master, textvariable="", relief=SUNKEN, bd=1, anchor="w", background=WINDOW_COLOR)
 status.pack(side="bottom", anchor="s", fill="x")
