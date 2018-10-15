@@ -550,7 +550,7 @@ def scene6_1_takeanap():
 
 	
 	if not play_obj.is_playing():
-		play_obj=wab_obj.play()
+		play_obj=wav_obj.play()
 		
 	interval = 2000 
 	 
