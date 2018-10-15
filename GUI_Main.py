@@ -3,6 +3,7 @@ from PIL import ImageTk, Image
 import os.path
 import io
 from Riddles import Riddle
+from playsound import playsound
 
 BUTTON_SPACING = 50
 INSTALL_DIR = os.getcwd() + "/"
@@ -771,6 +772,8 @@ entry_field.configure(bd=3,width=WINDOW_WIDTH)
 panel.after(5000, lambda: scene0_instructions() ) # after 1000ms
 
 entry_field.bind('<Return>', lambda event: check_input())
+
+playsound("Konobi OST Kawaranai Uchimaki.wav")
 
 master.mainloop()
 # #Start the GUI
