@@ -347,7 +347,7 @@ def scene3_2_backyardorbath():
 	global entry_field
 	# global path
 	update_status_bar("Max plays with his toys, but still has lots of energy!")
-	path = INSTALL_DIR +"2.png"
+	path = INSTALL_DIR +"3.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	img2 = ImageTk.PhotoImage(Image.open(path))
 	panel.config(image=img2)
