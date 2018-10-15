@@ -153,13 +153,32 @@ def check_input():
 
 def load(filename):
 	global status
-	save_file = open(INSTALL_DIR+filename, "r")
-	loadednum = float(save_file.read())
-	save_file.close()
-	update_status_bar("Loading...")
-	scene_number.changeScene(loadednum)
-	update_status_bar("Loaded " + str(scene_number.getNum()))
-	check_input()
+
+	try:
+		save_file = open(INSTALL_DIR+filename, "r")
+	except FileNotFoundError:
+		update_status_bar("No save file exists.")
+	else:
+		try:
+			loadednum = float(save_file.read())
+		except (TypeError, ValueError):
+			save_file.close()
+			update_status_bar("Save file is corrupted. Please start a new game.")
+		else:
+			save_file.close()
+			if loadednum < 1 or loadednum > 12.4:
+				update_status_bar("Save file is corrupted. Please start a new game.")
+			scene_number.changeScene(loadednum)
+			check_input()
+			update_status_bar("Welcome back!")
+
+	# save_file = open(INSTALL_DIR+filename, "r")
+	# loadednum = float(save_file.read())
+	# save_file.close()
+	# update_status_bar("Loading...")
+	# scene_number.changeScene(loadednum)
+	# update_status_bar("Loaded " + str(scene_number.getNum()))
+	
 
 
 def scene0_instructions():
