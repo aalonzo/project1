@@ -4,6 +4,8 @@ import os.path
 import io
 from Riddles import Riddle
 from playsound import playsound
+import simpleaudio as sa
+
 
 BUTTON_SPACING = 50
 INSTALL_DIR = os.getcwd() + "/"
@@ -577,8 +579,13 @@ def scene11_game_over():
 	global choiceB
 	global current_input
 	global entry_field
+	
+	global play_obj
+	
 	# global path
 
+	play_obj.stop()
+	
 	# whoever had this one, I ended up adding the buttons for you!
 	# this should give you an idea of what we want for now.
 	# you use the global keywords on choiceA and choiceB (the variables for these
@@ -773,7 +780,8 @@ panel.after(5000, lambda: scene0_instructions() ) # after 1000ms
 
 entry_field.bind('<Return>', lambda event: check_input())
 
-playsound("Konobi OST Kawaranai Uchimaki.wav")
+wav_obj=sa.WaveObject.from_wave_file("Konobi OST Kawaranai Uchimaki.wav")
+play_obj=wav_obj.play()
 
 master.mainloop()
 # #Start the GUI
