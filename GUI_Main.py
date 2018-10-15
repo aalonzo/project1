@@ -240,6 +240,7 @@ def scene1_intro():
 	
 	global play_obj
 	global wav_obj
+	global badowner
 	# global dialog_box
 
 	saveGame.config(state=NORMAL)
@@ -259,7 +260,11 @@ def scene1_intro():
 	choiceB.config(text="Nah, bye.", command=lambda: scene11_game_over())
 
 	if not play_obj.is_playing():
-		play_obj=wav_obj.play()
+		if badowner:
+			play_obj.stop()
+			play_obj=wav_obj.play()
+		else:
+			play_obj=wav_obj.play()
 	
 	# global path
 	update_status_bar("You and Max walk into the house.  He seems curious!")
@@ -642,10 +647,12 @@ def scene11_game_over():
 	global entry_field
 	
 	global play_obj
-	
+	global badowner
 	# global path
 
 	play_obj.stop()
+	play_obj=bad_obj.play()
+	badowner=True
 	
 	# whoever had this one, I ended up adding the buttons for you!
 	# this should give you an idea of what we want for now.
@@ -851,7 +858,9 @@ panel.after(5000, lambda: scene0_instructions() ) # after 1000ms
 entry_field.bind('<Return>', lambda event: check_input())
 
 wav_obj=sa.WaveObject.from_wave_file("Konobi OST Kawaranai Uchimaki.wav")
+bad_obj=sa.WaveObject.from_wave_file("Kokoro_Connect_OST_01_-_Yume_Datta_no_ka_Yume_Janakatta_no_ka_-_Misawa_Yasuhiro-GG_fyh8QEmo.wav")
 play_obj=wav_obj.play()
+badowner=False
 
 master.mainloop()
 # #Start the GUI
