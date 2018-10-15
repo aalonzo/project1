@@ -193,6 +193,8 @@ def scene0_instructions():
 	global entry_field
 	global saveGame
 	global loadGame
+	
+	global play_obj
 	# global path
 
 	# whoever had this one, I ended up adding the buttons for you!
@@ -205,7 +207,9 @@ def scene0_instructions():
 	choiceA.config(text="Start Game", command=lambda: scene1_intro())
 	choiceB.config(text="Quit", command=lambda: master.destroy())
 
-
+	if not play_obj.is_playing():
+		play_obj.play()
+	
 	# scene0 is where we want the buttons and the frame they're in to be packed,
 	# as we don't want them to show on the title screen.
 	choiceA.pack(in_=bottom_button_frame, side="left", ipadx=5, ipady=5, padx=BUTTON_SPACING)
@@ -232,6 +236,8 @@ def scene1_intro():
 	# global status_text
 	global current_input
 	global entry_field
+	
+	global play_obj
 	# global dialog_box
 
 	saveGame.config(state=NORMAL)
@@ -250,6 +256,9 @@ def scene1_intro():
 	choiceA.config(text="Yes!", command=lambda: scene2())
 	choiceB.config(text="Nah, bye.", command=lambda: scene11_game_over())
 
+	if not play_obj.is_playing():
+		play_obj.play()
+	
 	# global path
 	update_status_bar("You and Max walk into the house.  He seems curious!")
 	path = INSTALL_DIR +"1.png"
@@ -263,9 +272,14 @@ def scene2():
 	# global status_text
 	global current_input
 	global entry_field
+	global play_obj
 
 	choiceA.config(text="Let's go to the bathroom for a bath.", command=lambda: scene3_1_takeabath())
 	choiceB.config(text="Let's stay in the living room and play with toys", command=lambda: scene3_2_backyardorbath())
+	
+	if not play_obj.is_playing():
+		play_obj.play()
+		
 	# global path
 	update_status_bar("Help Max decide where to play!")
 	path = INSTALL_DIR +"2.png"
@@ -281,11 +295,16 @@ def scene10():
 	global choiceB
 	global current_input
 	global entry_field
+	
+	global play_obj
 	# global path
 	
 	choiceA.config(text="Back to Start", command=lambda: scene1_intro())
 	choiceB.config(text="Exit Game", command=lambda: master.destroy())
 	saveGame.config(state=DISABLED)
+	
+	if not play_obj.is_playing():
+		play_obj.play()
 	
 	update_status_bar("Thanks for playing!  Click \"Back to Start\" to play again, or \"Quit\" to quit the game.")
 	path = INSTALL_DIR +"end.png"
@@ -299,6 +318,8 @@ def scene3_1_takeabath():
 	# global status_text
 	global current_input
 	global entry_field
+	
+	global play_obj
 	# global path
 
 	# # scene0 is where we want the buttons and the frame they're in to be packed,
@@ -309,6 +330,9 @@ def scene3_1_takeabath():
 	choiceB.config(state=DISABLED)
 	saveGame.config(state=DISABLED)
 	loadGame.config(state=DISABLED)
+	
+	if not play_obj.is_playing():
+		play_obj.play()
 	
 	interval = 3000 
 	update_status_bar('')
@@ -348,6 +372,8 @@ def scene3_2_backyardorbath():
 	# global status_text
 	global current_input
 	global entry_field
+	
+	global play_obj
 	# global path
 	update_status_bar("Max plays with his toys, but still has lots of energy!")
 	path = INSTALL_DIR +"3.png"
@@ -356,6 +382,9 @@ def scene3_2_backyardorbath():
 	panel.config(image=img2)
 	panel.image=img2
 	scene_number.changeScene(3.2)
+	
+	if not play_obj.is_playing():
+		play_obj.play()
 
 	choiceA.config(text="Sure buddy, anything for you!", command=lambda: scene4_1_playinbackyard())
 	choiceB.config(text="Why don't we get some stairs exercises\ndone for that booty instead!", command=lambda: scene4_2_exercisethatbooty())
@@ -364,12 +393,17 @@ def scene4_1_playinbackyard():
 	# global status_text
 	global current_input
 	global entry_field
+	
+	global play_obj
 	# global path
 
 	choiceA.config(state=DISABLED)
 	choiceB.config(state=DISABLED)
 	saveGame.config(state=DISABLED)
 	loadGame.config(state=DISABLED)
+	
+	if not play_obj.is_playing():
+		play_obj.play()
 
 	interval = 2000 
 	update_status_bar("You and Max are having fun in the backyard!")
@@ -422,6 +456,8 @@ def scene4_2_exercisethatbooty():
 	# global status_text
 	global current_input
 	global entry_field
+	
+	global play_obj
 	# global path
 	update_status_bar("Max stares at the tall staircase.")
 	path = INSTALL_DIR +"7_2.png"
@@ -433,17 +469,25 @@ def scene4_2_exercisethatbooty():
 	
 	choiceA.config(text="Lets go for it!", command=lambda: scene12_anagramgame_instructions())
 	choiceB.config(text="You can do it on your own.", command=lambda: scene11_game_over())
+	
+	if not play_obj.is_playing():
+		play_obj.play()
 
 def scene5_1_kitchenformeal():
 	# global status_text
 	global current_input
 	global entry_field
+	
+	global play_obj
 	# global path
 
 	choiceA.config(state=DISABLED)
 	choiceB.config(state=DISABLED)
 	saveGame.config(state=DISABLED)
 	loadGame.config(state=DISABLED)
+	
+	if not play_obj.is_playing():
+		play_obj.play()
 
 	interval = 3000 
 	update_status_bar('')
@@ -484,6 +528,8 @@ def scene6_1_takeanap():
 	# global status_text
 	global current_input
 	global entry_field
+	
+	global play_obj
 	# global path
 
 	choiceA.config(state=DISABLED)
@@ -491,6 +537,10 @@ def scene6_1_takeanap():
 	saveGame.config(state=DISABLED)
 	loadGame.config(state=DISABLED)
 
+	
+	if not play_obj.is_playing():
+		play_obj.play()
+		
 	interval = 2000 
 	 
 	update_status_bar("You carried Max upstairs to your bedroom.")
@@ -662,7 +712,7 @@ def scene12_2_anagramgame_secondanagram():
 
 	choiceA.config(text="Submit", command=lambda: check_input())
 	choiceB.config(text="Clear", command=lambda: entry_field.delete(0, END))
-
+	
 	theriddle = Riddle(1)
 	entry_field.config(state=NORMAL, bg="white")
 	update_status_bar("Solve this anagram: " + theriddle.getRiddle())
