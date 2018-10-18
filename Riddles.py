@@ -10,9 +10,9 @@ class Riddle:
 
 	def __init__(self, row):
 		#Row number of the CSV for the riddle or anagram or whatever, my current idea is a two column CSV with the left column being the riddle and the right column being the solution
-		riddlefile = open(GLOBAL_PATH + "/riddles.csv")
+		riddlefile = open(GLOBAL_PATH + "/riddles.csv") # csv is encoded in UTF-8
 		reader = csv.reader(riddlefile)
-		for x in range(row):
+		for x in range(row + 1):
 			next(riddlefile)
 		rowz = next(reader)
 		self.riddle = rowz[0]
