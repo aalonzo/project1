@@ -229,7 +229,7 @@ def scene0_instructions():
 	update_status_bar("Press \"Start Game\" to play, or \"Quit\" to quit.")
 	path = INSTALL_DIR +"inst.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
+	img2 = ImageTk.PhotoImage(Image.open(path).resize((1000, 600))
 	panel.config(image=img2)
 	panel.image=img2
 
