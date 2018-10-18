@@ -12,7 +12,7 @@ INSTALL_DIR = os.getcwd() + "/"
 WINDOW_TITLE = "Corgi Adventures"
 IMG_FRM_COLOR = '#d3d3d3'
 WINDOW_COLOR = '#BEBEBE'
-WINDOW_WIDTH = "820"
+WINDOW_WIDTH = "805"
 WINDOW_HEIGHT = "1024"
 SAVE_FILE="save.txt"
 
@@ -51,14 +51,14 @@ def update_status_bar(sb_text):
 	global status 
 
 	status.config(text="")
-	status.update_idletasks()
+	status.update()
 	status.config(text=sb_text)
-	status.update_idletasks()
+	status.update()
 
 def update_sceneimg(img_filepath):
 	global panel
 	# the standard image opening code used in the last release.
-	img = ImageTk.PhotoImage(Image.open(img_filepath).resize((1000, 600)))
+	img = ImageTk.PhotoImage(Image.open(img_filepath).resize((800, 600), Image.ANTIALIAS))
 	panel.config(image=img)
 	panel.image=img
 
@@ -175,15 +175,6 @@ def load(filename):
 			scene_number.changeScene(loadednum)
 			check_input()
 			update_status_bar("Welcome back!")
-
-	# save_file = open(INSTALL_DIR+filename, "r")
-	# loadednum = float(save_file.read())
-	# save_file.close()
-	# update_status_bar("Loading...")
-	# scene_number.changeScene(loadednum)
-	# update_status_bar("Loaded " + str(scene_number.getNum()))
-	
-
 
 def scene0_instructions():
 	global choiceA
@@ -346,12 +337,12 @@ def scene3_1_takeabath():
 	path = INSTALL_DIR +"corgi_outside_bath.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(interval, panel.update_idletasks())
+	panel.after(interval, panel.update())
 
 	path = INSTALL_DIR +"corgi_inside_bath.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(interval, panel.update_idletasks())
+	panel.after(interval, panel.update())
 
 	choiceA.config(text="Dry off in the kitchen", command=lambda: scene5_1_kitchenformeal(), state=NORMAL)
 	choiceB.config(text="Take a nap in the bedroom", command=lambda: scene6_1_takeanap(), state=NORMAL)
@@ -409,17 +400,17 @@ def scene4_1_playinbackyard():
 	path = INSTALL_DIR +"corgi_backyard_left.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(interval, panel.update_idletasks())
+	panel.after(interval, panel.update())
 	
 	path = INSTALL_DIR +"corgi_backyard_right.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(interval, panel.update_idletasks())
+	panel.after(interval, panel.update())
 
 	path = INSTALL_DIR +"corgi_backyard_left.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(interval, panel.update_idletasks())
+	panel.after(interval, panel.update())
 
 	# path = INSTALL_DIR +"corgi_backyard_right.png"
 	# #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
@@ -432,7 +423,7 @@ def scene4_1_playinbackyard():
 	path = INSTALL_DIR +"4_3.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	# panel.update_idletasks()
+	# panel.update()
 
 	 # after 1000ms
 	scene_number.changeScene(4.1)
@@ -486,12 +477,12 @@ def scene5_1_kitchenformeal():
 	path = INSTALL_DIR +"corgi_waiting_food.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(interval, panel.update_idletasks())
+	panel.after(interval, panel.update())
 
 	path = INSTALL_DIR +"corgi_gets_food.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(interval, panel.update_idletasks())
+	panel.after(interval, panel.update())
 
 	update_status_bar("Max feels satisfied.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
@@ -533,26 +524,26 @@ def scene6_1_takeanap():
 	path = INSTALL_DIR +"corgi_off_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(interval, panel.update_idletasks())
+	panel.after(interval, panel.update())
 	
 	update_status_bar("Max goes to sleep.")
 	path = INSTALL_DIR +"corgi_sleeping_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(interval, panel.update_idletasks())
+	panel.after(interval, panel.update())
 
 	update_status_bar("")
 	path = INSTALL_DIR +"corgi_love_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(interval, panel.update_idletasks())
+	panel.after(interval, panel.update())
 	
 	update_status_bar("Max woke up!  You pet and kiss him because of how cute he is after naps.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
 	path = INSTALL_DIR +"8_4.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	# panel.update_idletasks()
+	# panel.update()
 
 	choiceA.config(text="Feed Max", command=lambda: scene6_2_feedafternap(), state=NORMAL)
 	choiceB.config(text="Make me! Get your own food, you parasite!", command=lambda: scene11_game_over(), state=NORMAL)
@@ -574,7 +565,7 @@ def scene6_2_feedafternap():
 	path = INSTALL_DIR +"corgi_getsfood_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(interval, panel.update_idletasks())
+	panel.after(interval, panel.update())
 
 	scene_number.changeScene(6.2)
 	entry_field.config(state=NORMAL, background="white")
@@ -729,7 +720,7 @@ def scene12_4_anagramgame_success():
 	choiceA.config(state=DISABLED)
 	choiceB.config(state=DISABLED)
 
-	panel.after(1000, panel.update_idletasks())
+	panel.after(1000, panel.update())
 
 
 	entry_field.pack_forget()
@@ -740,13 +731,13 @@ def scene12_4_anagramgame_success():
 	path = INSTALL_DIR +"corgi_win_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(interval, panel.update_idletasks())
+	panel.after(interval, panel.update())
 
 	update_status_bar("")
 	path = INSTALL_DIR +"corgi_success_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(4000, panel.update_idletasks())
+	panel.after(4000, panel.update())
 
 	scene_number.changeScene(12.4)
 	entry_field.config(state=NORMAL, disabledbackground="white")
