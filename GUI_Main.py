@@ -56,10 +56,11 @@ def update_status_bar(sb_text):
 	status.update_idletasks()
 
 def update_sceneimg(img_filepath):
+	global panel
 	# the standard image opening code used in the last release.
-	img = ImageTk.PhotoImage(Image.open(img_filepath))
-	bg_image_widget.config(image=img)
-	bg_image_widget.image=img
+	img = ImageTk.PhotoImage(Image.open(img_filepath).resize((1000, 600)))
+	panel.config(image=img)
+	panel.image=img
 
 def save():
 	global status
@@ -229,9 +230,7 @@ def scene0_instructions():
 	update_status_bar("Press \"Start Game\" to play, or \"Quit\" to quit.")
 	path = INSTALL_DIR +"inst.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path).resize((1000, 600))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 
 def scene1_intro():
 	# global status_text
@@ -270,9 +269,7 @@ def scene1_intro():
 	update_status_bar("You and Max walk into the house.  He seems curious!")
 	path = INSTALL_DIR +"1.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	scene_number.changeScene(1)
 
 def scene2():
@@ -293,9 +290,7 @@ def scene2():
 	update_status_bar("Help Max decide where to play!")
 	path = INSTALL_DIR +"2.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	scene_number.changeScene(2)
 	
 def scene10():
@@ -319,9 +314,7 @@ def scene10():
 	update_status_bar("Thanks for playing!  Click \"Back to Start\" to play again, or \"Quit\" to quit the game.")
 	path = INSTALL_DIR +"end.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	scene_number.changeScene(10)
 	
 def scene3_1_takeabath():
@@ -352,16 +345,12 @@ def scene3_1_takeabath():
 	entry_field.config(state=DISABLED, disabledbackground="gray")
 	path = INSTALL_DIR +"corgi_outside_bath.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(interval, panel.update_idletasks())
 
 	path = INSTALL_DIR +"corgi_inside_bath.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(interval, panel.update_idletasks())
 
 	choiceA.config(text="Dry off in the kitchen", command=lambda: scene5_1_kitchenformeal(), state=NORMAL)
@@ -373,9 +362,7 @@ def scene3_1_takeabath():
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
 	path = INSTALL_DIR +"6_3.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 
 	scene_number.changeScene(3.1)
 	
@@ -390,9 +377,7 @@ def scene3_2_backyardorbath():
 	update_status_bar("Max plays with his toys, but still has lots of energy!")
 	path = INSTALL_DIR +"3.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	scene_number.changeScene(3.2)
 	
 	if not play_obj.is_playing():
@@ -423,23 +408,17 @@ def scene4_1_playinbackyard():
 	entry_field.config(state=DISABLED, disabledbackground="gray")
 	path = INSTALL_DIR +"corgi_backyard_left.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(interval, panel.update_idletasks())
 	
 	path = INSTALL_DIR +"corgi_backyard_right.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(interval, panel.update_idletasks())
 
 	path = INSTALL_DIR +"corgi_backyard_left.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(interval, panel.update_idletasks())
 
 	# path = INSTALL_DIR +"corgi_backyard_right.png"
@@ -452,9 +431,7 @@ def scene4_1_playinbackyard():
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
 	path = INSTALL_DIR +"4_3.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	# panel.update_idletasks()
 
 	 # after 1000ms
@@ -476,9 +453,7 @@ def scene4_2_exercisethatbooty():
 	update_status_bar("Max stares at the tall staircase.")
 	path = INSTALL_DIR +"7_2.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	scene_number.changeScene(4.2)
 	
 	choiceA.config(text="Lets go for it!", command=lambda: scene12_anagramgame_instructions())
@@ -510,25 +485,19 @@ def scene5_1_kitchenformeal():
 	entry_field.config(state=DISABLED, disabledbackground="gray")
 	path = INSTALL_DIR +"corgi_waiting_food.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(interval, panel.update_idletasks())
 
 	path = INSTALL_DIR +"corgi_gets_food.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(interval, panel.update_idletasks())
 
 	update_status_bar("Max feels satisfied.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
 	path = INSTALL_DIR +"corgi_kitchen_question.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 
 	scene_number.changeScene(5.1)
 	
@@ -563,34 +532,26 @@ def scene6_1_takeanap():
 	entry_field.config(state=DISABLED, disabledbackground="gray")
 	path = INSTALL_DIR +"corgi_off_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(interval, panel.update_idletasks())
 	
 	update_status_bar("Max goes to sleep.")
 	path = INSTALL_DIR +"corgi_sleeping_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(interval, panel.update_idletasks())
 
 	update_status_bar("")
 	path = INSTALL_DIR +"corgi_love_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(interval, panel.update_idletasks())
 	
 	update_status_bar("Max woke up!  You pet and kiss him because of how cute he is after naps.")
 	entry_field.after(interval, entry_field.config(state=NORMAL, bg="white"))
 	path = INSTALL_DIR +"8_4.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	# panel.update_idletasks()
 
 	choiceA.config(text="Feed Max", command=lambda: scene6_2_feedafternap(), state=NORMAL)
@@ -612,9 +573,7 @@ def scene6_2_feedafternap():
 	entry_field.config(state=DISABLED, disabledbackground="gray")
 	path = INSTALL_DIR +"corgi_getsfood_bed.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(interval, panel.update_idletasks())
 
 	scene_number.changeScene(6.2)
@@ -670,9 +629,7 @@ def scene11_game_over():
 	update_status_bar("You're a bad owner!  Click \"Play Again\" to start over, or \"Quit\" to quit.")
 	path = INSTALL_DIR +"sad.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 
 	scene_number.changeScene(11.1)
 
@@ -688,16 +645,14 @@ def scene12_anagramgame_instructions():
 	choiceA.config(text="Let's help him!", command=lambda: scene12_1_anagramgame_firstanagram())
 	choiceB.config(text="He can stay downstairs for all I care.", command=lambda: scene11_game_over())
 	
-	if not play_obi.is_playing():
+	if not play_obj.is_playing():
 		play_obj=wav_obj.play()
 
 	entry_field.config(state=NORMAL, bg="white")
 	update_status_bar("What do you want to do?")
 	path = INSTALL_DIR +"corgi_instructions_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 
 	scene_number.changeScene(12)
 
@@ -722,9 +677,7 @@ def scene12_1_anagramgame_firstanagram():
 	update_status_bar("Solve this anagram: " + theriddle.getRiddle())
 	path = INSTALL_DIR +"corgi_firstframe_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 
 	scene_number.changeScene(12.1)
 
@@ -745,9 +698,7 @@ def scene12_2_anagramgame_secondanagram():
 	update_status_bar("Solve this anagram: " + theriddle.getRiddle())
 	path = INSTALL_DIR +"corgi_secondframe_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 
 
 	scene_number.changeScene(12.2)
@@ -764,9 +715,7 @@ def scene12_3_anagramgame_thirdanagram():
 	update_status_bar("Solve this anagram: " + theriddle.getRiddle())
 	path = INSTALL_DIR +"corgi_thirdframe_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 
 
 	scene_number.changeScene(12.3)
@@ -790,17 +739,13 @@ def scene12_4_anagramgame_success():
 	entry_field.config(state=DISABLED, disabledbackground="gray")
 	path = INSTALL_DIR +"corgi_win_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(interval, panel.update_idletasks())
 
 	update_status_bar("")
 	path = INSTALL_DIR +"corgi_success_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-	img2 = ImageTk.PhotoImage(Image.open(path))
-	panel.config(image=img2)
-	panel.image=img2
+	update_sceneimg(path)
 	panel.after(4000, panel.update_idletasks())
 
 	scene_number.changeScene(12.4)
