@@ -728,18 +728,18 @@ scene_number = scene_num()
 
 # This method retrieves the screen resolution of user
 def screen_size():
-        root = Tk()
-        screen_width = root.winfo_screenwidth()
-        screen_height = root.winfo_screenheight()
-        return screen_height, screen_width
+	global master
+	screen_width = master.winfo_screenwidth()
+	screen_height = master.winfo_screenheight()
+	return screen_height, screen_width
 
 def window_height(screen_height):
-        window_height = int(screen_height * .8)
-        return window_height
+    window_height = int(screen_height * .8)
+    return window_height
 
 def window_width(screen_width):
-        window_width = int(screen_width * .8)
-        return window_width
+	window_width = int(screen_width * .8)
+	return window_width
 
 # #This creates the main window of an application
 master = Tk()
@@ -750,14 +750,9 @@ window_Width = str(window_width(screen_Width))
 
 
 master.title(WINDOW_TITLE)
-<<<<<<< HEAD
-master.geometry(window_Width +"x"+ window_Height)
-master.configure(background="WHITE")
-=======
-master.geometry(WINDOW_HEIGHT+"x"+WINDOW_WIDTH)
+master.geometry(window_Width+"x"+window_Height)
 master.configure(background=IMG_FRM_COLOR)
 master.resizable(0, 0)
->>>>>>> c58a1da77dceb3640cc1048bb21b8988c0bf6ff4
 
 path = INSTALL_DIR +"home.png"
 # status_text = StringVar()
