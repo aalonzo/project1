@@ -745,13 +745,32 @@ def scene12_4_anagramgame_success():
 
 scene_number = scene_num()
 
+# This method retrieves the screen resolution of user
+def screen_size():
+        root = Tk()
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+        return screen_height, screen_width
+
+def window_height(screen_height):
+        window_height = int(screen_height * .8)
+        return window_height
+
+def window_width(screen_width):
+        window_width = int(screen_width * .8)
+        return window_width
 
 # #This creates the main window of an application
 master = Tk()
+screen_Height, screen_Width = screen_size()
+
+window_Height = str(window_height(screen_Height))
+window_Width = str(window_width(screen_Width))
+
 
 master.title(WINDOW_TITLE)
-master.geometry(WINDOW_HEIGHT+"x"+WINDOW_WIDTH)
-master.configure(background=IMG_FRM_COLOR)
+master.geometry(window_Width +"x"+ window_Height)
+master.configure(background="WHITE")
 
 path = INSTALL_DIR +"home.png"
 # status_text = StringVar()
