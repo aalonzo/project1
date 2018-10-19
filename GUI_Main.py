@@ -12,7 +12,7 @@ INSTALL_DIR = os.getcwd() + "/"
 WINDOW_TITLE = "Corgi Adventures"
 IMG_FRM_COLOR = '#d3d3d3'
 WINDOW_COLOR = '#BEBEBE'
-WINDOW_WIDTH = "720"
+WINDOW_WIDTH = "805"
 WINDOW_HEIGHT = "1024"
 SAVE_FILE="save.txt"
 
@@ -57,16 +57,10 @@ def update_status_bar(sb_text):
 
 def update_sceneimg(img_filepath):
 	global panel
-	global bottom_button_frame
 	# the standard image opening code used in the last release.
-	img = ImageTk.PhotoImage(Image.open(img_filepath))
-	# if screen resolution is too small:
-	#	downscale using this function on img
-	#	img.resize((int(WINDOW_HEIGHT), int(WINDOW_WIDTH)), Image.ANTIALIAS)
+	img = ImageTk.PhotoImage(Image.open(img_filepath).resize((800, 600), Image.ANTIALIAS))
 	panel.config(image=img)
 	panel.image=img
-	bottom_button_frame.configure(background="")
-	bottom_button_frame.update()
 
 def save():
 	global status
@@ -86,8 +80,41 @@ def check_input():
 	current_input = entry_field.get()
 	entry_field.delete(0, END)
 
+	
+	# intro scene, which starts out asking the player whether they want to play
+	# or just tell the corgi to go away
+	# if current_input == "start":
+	# 	scene1_intro()
+	# 	return None
+
+	# # tells the program to quit.  Can take place at any time.
+	# if current_input == "quit":
+	# 	master.destroy()
+
+	# tells the program to save wherever the user is at.
+	# if current_input == "save":
+	# 	save_file = open(os.getcwd()+"/save.txt", "w+")
+	# 	save_file.write(str(scene_number.getNum()))
+	# 	save_file.close()
+	# 	update_status_bar("Your progress was saved.")
+	# 	return None
+
+	# tells the program to save wherever the user is at.
+	# if current_input == "load":
+	# 	viableSaves = ["1","2","3.1"]
+	# 	save_file = open(os.getcwd()+"/save.txt", "r")
+	# 	loadednum = save_file.read(scene_number.getNum())
+	# 	save_file.close()
+	# 	if not loadednum in viableSaves:
+	# 		return "error, save corrupted"
+	# 	return "Take me to the correct scene don't return anything"
+	# the choice branch for the first scene.
+	# if choice A, goes to the scene where it asks to play in the backyard.
+	# if choice B, ends the game and gives the user the option to play again 
+	# or quit the game entirely.
 	if scene_number.getNum() == 1:
 		scene1_intro()
+	# triggers the choices for the second scene, where the corgi asks the user 
 	elif scene_number.getNum() == 2:
 		scene2()
 	elif scene_number.getNum() == 3.1:
@@ -188,7 +215,7 @@ def scene0_instructions():
 
 	# pack the frame we made onto the window
 	# !!!! DO NOT COPY AND PASTE THIS IN ANY OTHER SCENE EXCEPT WHERE NOTED !!!!!!!
-	bottom_button_frame.pack(side="bottom", anchor="s", fill="both")
+	bottom_button_frame.pack(side="bottom", anchor="s")
 
 	entry_field.config(state=NORMAL, bg="white")
 	update_status_bar("Press \"Start Game\" to play, or \"Quit\" to quit.")
@@ -222,19 +249,12 @@ def scene1_intro():
 	choiceA.config(text="Yes!", command=lambda: scene2())
 	choiceB.config(text="Nah, bye.", command=lambda: scene11_game_over())
 
-	# if play_obj.is_playing():
-	# 	if badowner:
-	# 		play_obj.stop()
-	# 		play_obj=wav_obj.play()
-	# 	else:
-	# 		play_obj=wav_obj.play()
-
-	if play_obj.is_playing():
+	if not play_obj.is_playing():
 		if badowner:
 			play_obj.stop()
 			play_obj=wav_obj.play()
-	else:
-		play_obj=wav_obj.play()
+		else:
+			play_obj=wav_obj.play()
 	
 	# global path
 	update_status_bar("You and Max walk into the house.  He seems curious!")
@@ -629,13 +649,12 @@ def scene12_anagramgame_instructions():
 
 def scene12_1_anagramgame_firstanagram():
 	# global status_text
-	global mg_obj
 	global current_input
 	global entry_field
 	global play_obj
 	# global path
 	global theriddle
-	
+
 	entry_field.pack(side="bottom", anchor='s')
 
 	choiceA.config(text="Submit", command=lambda: check_input())
@@ -644,7 +663,6 @@ def scene12_1_anagramgame_firstanagram():
 	loadGame.config(state=DISABLED)
 
 	play_obj.stop()
-	mg_obj=mg_obj.play()
 	
 	entry_field.config(state=NORMAL, bg="white")
 	update_status_bar("Solve this anagram: " + theriddle.getRiddle())
@@ -689,19 +707,22 @@ def scene12_3_anagramgame_thirdanagram():
 	path = INSTALL_DIR +"corgi_thirdframe_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	scene_number.changeScene(12.3)
 
+
+	scene_number.changeScene(12.3)
 
 def scene12_4_anagramgame_success():
 	# global status_text
-	global mg_obj
 	global current_input
 	global entry_field
 	# global path
 
 	choiceA.config(state=DISABLED)
 	choiceB.config(state=DISABLED)
+
 	panel.after(1000, panel.update())
+
+
 	entry_field.pack_forget()
 
 	interval = 3000 
@@ -711,8 +732,6 @@ def scene12_4_anagramgame_success():
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
 	panel.after(interval, panel.update())
-
-	mg_obj=mg_obj.stop()
 
 	update_status_bar("")
 	path = INSTALL_DIR +"corgi_success_game.png"
@@ -726,19 +745,21 @@ def scene12_4_anagramgame_success():
 
 scene_number = scene_num()
 
-# This method retrieves the screen resolution of user
+# This method retrieves the screen resolution of the user
 def screen_size():
         root = Tk()
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
         return screen_height, screen_width
 
+# This method returns the window height of the application
 def window_height(screen_height):
-        window_height = int(screen_height * .8)
+        window_height = int(screen_height * .95)
         return window_height
 
+# This method returns the window width of the application
 def window_width(screen_width):
-        window_width = int(screen_width * .8)
+        window_width = int(screen_width * .95)
         return window_width
 
 # #This creates the main window of an application
@@ -750,28 +771,21 @@ window_Width = str(window_width(screen_Width))
 
 
 master.title(WINDOW_TITLE)
-<<<<<<< HEAD
 master.geometry(window_Width +"x"+ window_Height)
 master.configure(background="WHITE")
-=======
-master.geometry(WINDOW_HEIGHT+"x"+WINDOW_WIDTH)
-master.configure(background=IMG_FRM_COLOR)
-master.resizable(0, 0)
->>>>>>> c58a1da77dceb3640cc1048bb21b8988c0bf6ff4
 
 path = INSTALL_DIR +"home.png"
 # status_text = StringVar()
 
 #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-# img = ImageTk.PhotoImage(Image.open(path))
 img = ImageTk.PhotoImage(Image.open(path))
 
 #The Label widget is a standard Tkinter widget used to display a text or image on the screen.
 panel = Label(master, image = img, background=IMG_FRM_COLOR)
 
 #The Pack geometry manager packs widgets in rows or columns.
-# panel.pack(side = "top", anchor="n", fill = "both", expand="yes")
-panel.place(relx=0.5, rely=0.5, anchor=CENTER)
+panel.pack(side = "top", anchor="n", fill = "both", expand="yes")
+#place(relx=0.5, rely=0.5, anchor=CENTER)
 
 
 # dialog_box = Text(master, bd=10, highlightbackground="black", height=10, width=80)
@@ -781,8 +795,7 @@ panel.place(relx=0.5, rely=0.5, anchor=CENTER)
 # frame for the buttons.  made so they can be all on the same line.
 # the background has been filled with red to demonstrate how the frame
 # is laid onto the window.
-bottom_button_frame = Frame(master, background="", width=100)
-bottom_button_frame.update()
+bottom_button_frame = Frame(master, background=IMG_FRM_COLOR, width=100)
 
 choiceA = Button(text="")
 choiceB = Button(text="")
@@ -802,7 +815,6 @@ panel.after(5000, lambda: scene0_instructions() ) # after 1000ms
 entry_field.bind('<Return>', lambda event: check_input())
 
 wav_obj=sa.WaveObject.from_wave_file("Konobi OST Kawaranai Uchimaki.wav")
-mg_obj=sa.WaveObject.from_wave_file("minigame.wav")
 bad_obj=sa.WaveObject.from_wave_file("Kokoro_Connect_OST_01_-_Yume_Datta_no_ka_Yume_Janakatta_no_ka_-_Misawa_Yasuhiro-GG_fyh8QEmo.wav")
 play_obj=wav_obj.play()
 badowner=False
