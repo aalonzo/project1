@@ -57,8 +57,10 @@ def update_status_bar(sb_text):
 
 def update_sceneimg(img_filepath):
 	global panel
-	# the standard image opening code used in the last release.
-	img = ImageTk.PhotoImage(Image.open(img_filepath).resize((800, 600), Image.ANTIALIAS))
+	global picture_Width
+	global picture_Height
+	# the standard image opening code used in the last release. 
+	img = ImageTk.PhotoImage(Image.open(img_filepath).resize((int(picture_Width), int(picture_Height)), Image.ANTIALIAS))
 	panel.config(image=img)
 	panel.image=img
 
@@ -755,13 +757,13 @@ def screen_size():
 # This method returns the window height of the application
 def window_height(screen_height):
         
-        window_height = int(screen_height * .85)
+        window_height = int(screen_height * .8)
         return window_height
 
 # This method returns the window width of the application
 def window_width(screen_width):
 
-        window_width = int(screen_width * .8)
+        window_width = int(screen_width * .75)
         return window_width
 
 # #This creates the main window of an application
@@ -770,6 +772,8 @@ screen_Height, screen_Width = screen_size()
 
 window_Height = str(window_height(screen_Height))
 window_Width = str(window_width(screen_Width))
+picture_Height = int(window_Height) * .8
+picture_Width = int(window_Width) * .8
 
 master.title(WINDOW_TITLE)
 master.geometry(window_Width + "x" + window_Height)
@@ -780,7 +784,7 @@ path = INSTALL_DIR +"home.png"
 # status_text = StringVar()
 
 #Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
-img = ImageTk.PhotoImage(Image.open(path))
+img = ImageTk.PhotoImage(Image.open(path).resize((int(picture_Width), int(picture_Height)), Image.ANTIALIAS))
 
 #The Label widget is a standard Tkinter widget used to display a text or image on the screen.
 panel = Label(master, image = img, background=IMG_FRM_COLOR)
