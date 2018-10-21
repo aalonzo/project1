@@ -59,9 +59,6 @@ def update_sceneimg(img_filepath):
 	global panel
 	global picture_Width
 	global picture_Height
-	global scene_number
-	if not scene_number.getNum()==0
-		playsound("button_sound.wav")
 	# the standard image opening code used in the last release. 
 	img = ImageTk.PhotoImage(Image.open(img_filepath).resize((int(picture_Width), int(picture_Height)), Image.ANTIALIAS))
 	panel.config(image=img)
@@ -69,7 +66,6 @@ def update_sceneimg(img_filepath):
 
 def save():
 	global status
-	playsound("button_sound.wav")
 	save_file = open(INSTALL_DIR +SAVE_FILE, "w+")
 	save_file.write(str(scene_number.getNum()))
 	save_file.close()
@@ -163,7 +159,6 @@ def check_input():
 
 def load(filename):
 	global status
-	playsound("button.wav")
 
 	try:
 		save_file = open(INSTALL_DIR+filename, "r")
