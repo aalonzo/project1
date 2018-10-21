@@ -258,12 +258,20 @@ def scene1_intro():
 	choiceA.config(text="Yes!", command=lambda: scene2())
 	choiceB.config(text="Nah, bye.", command=lambda: scene11_game_over())
 
-	if not play_obj.is_playing():
+	# if not play_obj.is_playing():
+	# 	if badowner:
+	# 		play_obj.stop()
+	# 		play_obj=wav_obj.play()
+	# 	else:
+	# 		play_obj=wav_obj.play()
+
+	if play_obj.is_playing():
 		if badowner:
 			play_obj.stop()
 			play_obj=wav_obj.play()
-		else:
-			play_obj=wav_obj.play()
+
+	else:
+		play_obj=wav_obj.play()
 	
 	# global path
 	update_status_bar("You and Max walk into the house.  He seems curious!")
@@ -661,6 +669,7 @@ def scene12_1_anagramgame_firstanagram():
 	global current_input
 	global entry_field
 	global play_obj
+	global mg_obj
 	# global path
 	global theriddle
 
@@ -672,6 +681,7 @@ def scene12_1_anagramgame_firstanagram():
 	loadGame.config(state=DISABLED)
 
 	play_obj.stop()
+	mg_obj=mg_obj.play()
 	
 	entry_field.config(state=NORMAL, bg="white")
 	update_status_bar("Solve this anagram: " + theriddle.getRiddle())
@@ -724,6 +734,7 @@ def scene12_4_anagramgame_success():
 	# global status_text
 	global current_input
 	global entry_field
+	global mg_obj
 	# global path
 
 	choiceA.config(state=DISABLED)
@@ -741,6 +752,8 @@ def scene12_4_anagramgame_success():
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
 	panel.after(interval, panel.update())
+
+	mg_obj.stop()
 
 	update_status_bar("")
 	path = INSTALL_DIR +"corgi_success_game.png"
@@ -830,6 +843,7 @@ entry_field.bind('<Return>', lambda event: check_input())
 wav_obj=sa.WaveObject.from_wave_file("Konobi OST Kawaranai Uchimaki.wav")
 bad_obj=sa.WaveObject.from_wave_file("Kokoro_Connect_OST_01_-_Yume_Datta_no_ka_Yume_Janakatta_no_ka_-_Misawa_Yasuhiro-GG_fyh8QEmo.wav")
 but_obj=sa.WaveObject.from_wave_file("button_sound.wav")
+mg_obj=sa.WaveObject.from_wave_file("minigame.wav")
 play_obj=wav_obj.play()
 badowner=False
 
