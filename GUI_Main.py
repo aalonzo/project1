@@ -159,7 +159,7 @@ def check_input():
 
 def load(filename):
 	global status
-
+ 
 	try:
 		save_file = open(INSTALL_DIR+filename, "r")
 	except FileNotFoundError:
@@ -757,13 +757,13 @@ def screen_size():
 # This method returns the window height of the application
 def window_height(screen_height):
         
-        window_height = int(screen_height * .8)
+        window_height = int(screen_height * .75)
         return window_height
 
 # This method returns the window width of the application
 def window_width(screen_width):
 
-        window_width = int(screen_width * .75)
+        window_width = int(screen_width * .6)
         return window_width
 
 # #This creates the main window of an application
@@ -771,9 +771,9 @@ master = Tk()
 screen_Height, screen_Width = screen_size()
 
 window_Height = str(window_height(screen_Height))
-window_Width = str(window_width(screen_Width))
-picture_Height = int(window_Height) * .8
-picture_Width = int(window_Width) * .8
+window_Width = str(window_width(screen_Width)) 
+picture_Height = int(window_Height) * .85
+picture_Width = int(window_Width)
 
 master.title(WINDOW_TITLE)
 master.geometry(window_Width + "x" + window_Height)
