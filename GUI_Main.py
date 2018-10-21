@@ -3,7 +3,6 @@ from PIL import ImageTk, Image
 import os.path
 import io
 from Riddles import Riddle
-from playsound import playsound
 import simpleaudio as sa
 
 
@@ -60,8 +59,9 @@ def update_sceneimg(img_filepath):
 	global picture_Width
 	global picture_Height
 	global scene_number
+	global but_obj
 	if not scene_number.getNum()==0
-		playsound("button_sound.wav")
+		play_but=but_obj.play()
 	# the standard image opening code used in the last release. 
 	img = ImageTk.PhotoImage(Image.open(img_filepath).resize((int(picture_Width), int(picture_Height)), Image.ANTIALIAS))
 	panel.config(image=img)
@@ -69,7 +69,8 @@ def update_sceneimg(img_filepath):
 
 def save():
 	global status
-	playsound("button_sound.wav")
+	global but_obj
+	play_but=but_obj.play()
 	save_file = open(INSTALL_DIR +SAVE_FILE, "w+")
 	save_file.write(str(scene_number.getNum()))
 	save_file.close()
@@ -163,7 +164,8 @@ def check_input():
 
 def load(filename):
 	global status
-	playsound("button.wav")
+	global but_obj
+	play_but=but_obj.play()
 
 	try:
 		save_file = open(INSTALL_DIR+filename, "r")
@@ -827,6 +829,7 @@ entry_field.bind('<Return>', lambda event: check_input())
 
 wav_obj=sa.WaveObject.from_wave_file("Konobi OST Kawaranai Uchimaki.wav")
 bad_obj=sa.WaveObject.from_wave_file("Kokoro_Connect_OST_01_-_Yume_Datta_no_ka_Yume_Janakatta_no_ka_-_Misawa_Yasuhiro-GG_fyh8QEmo.wav")
+but_obj=sa.WaveObject.from_wave_file("button_sound.wav")
 play_obj=wav_obj.play()
 badowner=False
 
