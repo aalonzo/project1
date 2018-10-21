@@ -676,7 +676,6 @@ def scene12_anagramgame_instructions():
 	# global status_text
 	global current_input
 	global entry_field
-	
 	global play_obj
 	global wav_obj
 	global but_obj
@@ -777,6 +776,7 @@ def scene12_4_anagramgame_success():
 	# global status_text
 	global current_input
 	global entry_field
+	global success_obj
 	global mg_obj
 	global but_obj
 	# global path
@@ -797,16 +797,18 @@ def scene12_4_anagramgame_success():
 	path = INSTALL_DIR +"corgi_win_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
+	mg_obj.stop()
 	panel.after(interval, panel.update())
 
-	mg_obj.stop()
-
+	success_obj=success_obj.play()
+	
 	update_status_bar("")
 	path = INSTALL_DIR +"corgi_success_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(4000, panel.update())
+	panel.after(8000, panel.update())
 
+	success_obj.stop()
 	scene_number.changeScene(12.4)
 	entry_field.config(state=NORMAL, disabledbackground="white")
 	scene6_1_takeanap()
@@ -889,6 +891,7 @@ entry_field.bind('<Return>', lambda event: check_input())
 wav_obj=sa.WaveObject.from_wave_file("Konobi OST Kawaranai Uchimaki.wav")
 bad_obj=sa.WaveObject.from_wave_file("Kokoro_Connect_OST_01_-_Yume_Datta_no_ka_Yume_Janakatta_no_ka_-_Misawa_Yasuhiro-GG_fyh8QEmo.wav")
 but_obj=sa.WaveObject.from_wave_file("button_sound.wav")
+success_obj=sa.WaveObject.from_wave_file("success.wav")
 mg_obj=sa.WaveObject.from_wave_file("minigame.wav")
 play_obj=wav_obj.play()
 badowner=False
