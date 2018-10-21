@@ -60,7 +60,7 @@ def update_sceneimg(img_filepath):
 	global picture_Height
 	global scene_number
 	global but_obj
-	if not scene_number.getNum()==0
+	if not scene_number.getNum()==0:
 		play_but=but_obj.play()
 
 	# the standard image opening code used in the last release. 
