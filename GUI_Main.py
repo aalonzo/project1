@@ -60,8 +60,6 @@ def update_sceneimg(img_filepath):
 	global picture_Height
 	global scene_number
 	global but_obj
-	if not scene_number.getNum()==0:
-		play_but=but_obj.play()
 
 	# the standard image opening code used in the last release. 
 	img = ImageTk.PhotoImage(Image.open(img_filepath).resize((int(picture_Width), int(picture_Height)), Image.ANTIALIAS))
@@ -240,6 +238,7 @@ def scene1_intro():
 	global play_obj
 	global wav_obj
 	global badowner
+	global but_obj
 	# global dialog_box
 
 	saveGame.config(state=NORMAL)
@@ -264,6 +263,8 @@ def scene1_intro():
 	# 		play_obj=wav_obj.play()
 	# 	else:
 	# 		play_obj=wav_obj.play()
+	
+	play_but=but_obj.play()
 
 	if play_obj.is_playing():
 		if badowner:
@@ -287,10 +288,13 @@ def scene2():
 	
 	global play_obj
 	global wav_obj
+	global but_obj
 
 	choiceA.config(text="Let's go to the bathroom for a bath.", command=lambda: scene3_1_takeabath())
 	choiceB.config(text="Let's stay in the living room and play with toys", command=lambda: scene3_2_backyardorbath())
 	
+	play_but=but_obj.play()
+		
 	if not play_obj.is_playing():
 		play_obj=wav_obj.play()
 		
@@ -310,12 +314,15 @@ def scene10():
 	
 	global play_obj
 	global wav_obj
+	global but_obj
 	# global path
 	
-	choiceA.config(text="Back to Start", command=lambda: scene0_instructions())
+	choiceA.config(text="Back to Start", command=lambda: scene1_intro())
 	choiceB.config(text="Exit Game", command=lambda: master.destroy())
 	saveGame.config(state=DISABLED)
 	
+	play_but=but_obj.play()
+		
 	if not play_obj.is_playing():
 		play_obj=wav_obj.play()
 	
@@ -332,6 +339,7 @@ def scene3_1_takeabath():
 	
 	global play_obj
 	global wav_obj
+	global but_obj
 	# global path
 
 	# # scene0 is where we want the buttons and the frame they're in to be packed,
@@ -343,6 +351,9 @@ def scene3_1_takeabath():
 	saveGame.config(state=DISABLED)
 	loadGame.config(state=DISABLED)
 	
+			
+	play_but=but_obj.play()
+		
 	if not play_obj.is_playing():
 		play_obj=wav_obj.play()
 	
@@ -381,6 +392,7 @@ def scene3_2_backyardorbath():
 	
 	global play_obj
 	global wav_obj
+	global but_obj
 	# global path
 	update_status_bar("Max plays with his toys, but still has lots of energy!")
 	path = INSTALL_DIR +"3.png"
@@ -388,6 +400,8 @@ def scene3_2_backyardorbath():
 	update_sceneimg(path)
 	scene_number.changeScene(3.2)
 	
+	play_but=but_obj.play()
+		
 	if not play_obj.is_playing():
 		play_obj=wav_obj.play()
 
@@ -401,12 +415,15 @@ def scene4_1_playinbackyard():
 	
 	global play_obj
 	global wav_obj
+	global but_obj
 	# global path
 
 	choiceA.config(state=DISABLED)
 	choiceB.config(state=DISABLED)
 	saveGame.config(state=DISABLED)
 	loadGame.config(state=DISABLED)
+	
+	play_but=but_obj.play()
 	
 	if not play_obj.is_playing():
 		play_obj=wav_obj.play()
@@ -457,6 +474,7 @@ def scene4_2_exercisethatbooty():
 	
 	global play_obj
 	global wav_obj
+	global but_obj
 	# global path
 	update_status_bar("Max stares at the tall staircase.")
 	path = INSTALL_DIR +"7_2.png"
@@ -466,6 +484,8 @@ def scene4_2_exercisethatbooty():
 	
 	choiceA.config(text="Lets go for it!", command=lambda: scene12_anagramgame_instructions())
 	choiceB.config(text="You can do it on your own.", command=lambda: scene11_game_over())
+	
+	play_but=but_obj.play()
 	
 	if not play_obj.is_playing():
 		play_obj=wav_obj.play()
@@ -477,12 +497,15 @@ def scene5_1_kitchenformeal():
 	
 	global play_obj
 	global wav_obj
+	global but_obj
 	# global path
 
 	choiceA.config(state=DISABLED)
 	choiceB.config(state=DISABLED)
 	saveGame.config(state=DISABLED)
 	loadGame.config(state=DISABLED)
+	
+	play_but=but_obj.play()
 	
 	if not play_obj.is_playing():
 		play_obj=wav_obj.play()
@@ -523,6 +546,7 @@ def scene6_1_takeanap():
 	
 	global play_obj
 	global wav_obj
+	global but_obj
 	# global path
 
 	choiceA.config(state=DISABLED)
@@ -530,6 +554,7 @@ def scene6_1_takeanap():
 	saveGame.config(state=DISABLED)
 	loadGame.config(state=DISABLED)
 
+	play_but=but_obj.play()
 	
 	if not play_obj.is_playing():
 		play_obj=wav_obj.play()
@@ -574,7 +599,10 @@ def scene6_2_feedafternap():
 	# global status_text
 	global current_input
 	global entry_field
+	global but_obj
 	# global path
+	
+	play_but=but_obj.play()
 
 	interval = 4000 
 	update_status_bar("You fed Max.")
@@ -615,7 +643,10 @@ def scene11_game_over():
 	
 	global play_obj
 	global badowner
+	global but_obj
 	# global path
+	
+	play_but=but_obj.play()
 
 	play_obj.stop()
 	play_obj=bad_obj.play()
@@ -648,10 +679,13 @@ def scene12_anagramgame_instructions():
 	
 	global play_obj
 	global wav_obj
+	global but_obj
 	# global path
 
 	choiceA.config(text="Let's help him!", command=lambda: scene12_1_anagramgame_firstanagram())
 	choiceB.config(text="He can stay downstairs for all I care.", command=lambda: scene11_game_over())
+	
+	play_but=but_obj.play()
 	
 	if not play_obj.is_playing():
 		play_obj=wav_obj.play()
@@ -670,6 +704,7 @@ def scene12_1_anagramgame_firstanagram():
 	global entry_field
 	global play_obj
 	global mg_obj
+	global but_obj
 	# global path
 	global theriddle
 
@@ -680,6 +715,8 @@ def scene12_1_anagramgame_firstanagram():
 	saveGame.config(state=DISABLED)
 	loadGame.config(state=DISABLED)
 
+	play_but=but_obj.play()
+	
 	play_obj.stop()
 	mg_obj=mg_obj.play()
 	
@@ -699,9 +736,12 @@ def scene12_2_anagramgame_secondanagram():
 	global theriddle
 	global choiceA
 	global choiceB
+	global but_obj
 
 	choiceA.config(text="Submit", command=lambda: check_input())
 	choiceB.config(text="Clear", command=lambda: entry_field.delete(0, END))
+	
+	play_but=but_obj.play()
 	
 	theriddle = Riddle(1)
 	entry_field.config(state=NORMAL, bg="white")
@@ -719,6 +759,9 @@ def scene12_3_anagramgame_thirdanagram():
 	global entry_field
 	# global path
 	global theriddle
+	global but_obj
+	
+	play_but=but_obj.play()
 
 	theriddle = Riddle(2)
 	entry_field.config(state=NORMAL, bg="white")
@@ -735,11 +778,13 @@ def scene12_4_anagramgame_success():
 	global current_input
 	global entry_field
 	global mg_obj
-	global success_obj
+	global but_obj
 	# global path
 
 	choiceA.config(state=DISABLED)
 	choiceB.config(state=DISABLED)
+	
+	play_but=but_obj.play()
 
 	panel.after(1000, panel.update())
 
@@ -752,19 +797,15 @@ def scene12_4_anagramgame_success():
 	path = INSTALL_DIR +"corgi_win_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	mg_obj.stop()
 	panel.after(interval, panel.update())
 
-	
-	success_obj = success_obj.play()
+	mg_obj.stop()
 
 	update_status_bar("")
 	path = INSTALL_DIR +"corgi_success_game.png"
 	#Creates a Tkinter-compatible photo image, which can be used everywhere Tkinter expects an image object.
 	update_sceneimg(path)
-	panel.after(8000, panel.update())
-
-	success_obj.stop()
+	panel.after(4000, panel.update())
 
 	scene_number.changeScene(12.4)
 	entry_field.config(state=NORMAL, disabledbackground="white")
@@ -849,7 +890,6 @@ wav_obj=sa.WaveObject.from_wave_file("Konobi OST Kawaranai Uchimaki.wav")
 bad_obj=sa.WaveObject.from_wave_file("Kokoro_Connect_OST_01_-_Yume_Datta_no_ka_Yume_Janakatta_no_ka_-_Misawa_Yasuhiro-GG_fyh8QEmo.wav")
 but_obj=sa.WaveObject.from_wave_file("button_sound.wav")
 mg_obj=sa.WaveObject.from_wave_file("minigame.wav")
-success_obj=sa.WaveObject.from_wave_file("success.wav")
 play_obj=wav_obj.play()
 badowner=False
 
