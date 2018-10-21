@@ -62,6 +62,7 @@ def update_sceneimg(img_filepath):
 	global but_obj
 	if not scene_number.getNum()==0
 		play_but=but_obj.play()
+
 	# the standard image opening code used in the last release. 
 	img = ImageTk.PhotoImage(Image.open(img_filepath).resize((int(picture_Width), int(picture_Height)), Image.ANTIALIAS))
 	panel.config(image=img)
@@ -166,7 +167,6 @@ def load(filename):
 	global status
 	global but_obj
 	play_but=but_obj.play()
-
 	try:
 		save_file = open(INSTALL_DIR+filename, "r")
 	except FileNotFoundError:
@@ -764,13 +764,13 @@ def screen_size():
 # This method returns the window height of the application
 def window_height(screen_height):
         
-        window_height = int(screen_height * .8)
+        window_height = int(screen_height * .75)
         return window_height
 
 # This method returns the window width of the application
 def window_width(screen_width):
 
-        window_width = int(screen_width * .75)
+        window_width = int(screen_width * .6)
         return window_width
 
 # #This creates the main window of an application
@@ -778,9 +778,9 @@ master = Tk()
 screen_Height, screen_Width = screen_size()
 
 window_Height = str(window_height(screen_Height))
-window_Width = str(window_width(screen_Width))
-picture_Height = int(window_Height) * .8
-picture_Width = int(window_Width) * .8
+window_Width = str(window_width(screen_Width)) 
+picture_Height = int(window_Height) * .85
+picture_Width = int(window_Width)
 
 master.title(WINDOW_TITLE)
 master.geometry(window_Width + "x" + window_Height)
